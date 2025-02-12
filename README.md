@@ -44,8 +44,8 @@ Additionally, the system allows users to **upload images**, **IDs**, and **attac
 ## Getting Started
 
 1. Clone the repository.
-2. Set up the database and configure the connection string in the `appsettings.json` file.
-3. Set up file storage (local or cloud) for storing employee images and attachments.
+2. Set up the database and configure the connection string in the `appsettings.development.json` file.
+3. Run the `update-database` command by heading into the Infrastructure project to make the Database.
 4. Build and run the application using Visual Studio or the .NET CLI.
 
 ## Conclusion
