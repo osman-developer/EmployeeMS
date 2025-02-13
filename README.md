@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Employee Management System** is a project built using **.NET 8.0**, following a clean layered architecture. This design ensures maintainability, scalability, and separation of concerns, making it easy to extend and modify in the future. The project implements a **Generic Repository** pattern, allowing for reusable data access logic across different services. The core components of the system are separated into distinct projects with specific responsibilities.
+The **Employee Management System** is a project built using **.NET 8.0 & Angular 19.0.6**, following a clean layered architecture. This design ensures maintainability, scalability, and separation of concerns, making it easy to extend and modify in the future. The project implements a **Generic Repository** pattern, allowing for reusable data access logic across different services. The core components of the system are separated into distinct projects with specific responsibilities.
 
 Additionally, the system allows users to **upload images**, **IDs**, and **attachments** related to employees, making it suitable for comprehensive employee data management.
 
@@ -37,7 +37,7 @@ Additionally, the system allows users to **upload images**, **IDs**, and **attac
 
 ## Requirements
 
-- **.NET 8.0** or higher
+- **.NET 8.0** or higher & **Angular 19.0.6** or Higher
 - A database system (SQL Server, PostgreSQL, etc.) for storing employee data.
 - File storage mechanism (local storage or cloud storage) for handling employee uploads.
 
@@ -47,6 +47,7 @@ Additionally, the system allows users to **upload images**, **IDs**, and **attac
 2. Set up the database and configure the connection string in the `appsettings.json` file.
 3. Run the `update-database` command by heading into the Infrastructure project to make the Database.
 4. Build and run the application using Visual Studio or the .NET CLI.
+5. Navigate into the EmployeeMSClient app and run **npm install** to install the modules listed in the package.json file.
 
 ## Conclusion
 
