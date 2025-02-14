@@ -29,20 +29,20 @@ namespace EmployeeMS.API.Controllers
             return Ok(_employeeService.Save(employee));
         }
      
-        [HttpGet("employees")]
+        [HttpGet("all")]
         public async Task<ActionResult<List<GetEmployeeDTO>>> GetEmployees()
         {
             return Ok(await _employeeService.GetAll());
         }
         
-        [HttpPost("employees-paginated")]
+        [HttpPost("all-paginated")]
         public async Task<ActionResult<PagingResult<GetEmployeeDTO>>> GetAllPagedAsync([FromBody] PagingParams<Employee> paginParams)
         {
             var result = await _employeeService.GetAllPagedAsync(paginParams);
             return Ok(result);
         }
 
-        [HttpPost("employee")]
+        [HttpPost("by-id")]
         public async Task<ActionResult<GetEmployeeDTO>> GetEmployeeById([FromBody] int employeeId)
         {
             return Ok(await _employeeService.Get(employeeId));
