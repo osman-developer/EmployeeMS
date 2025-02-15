@@ -23,12 +23,13 @@ builder.Services.AddScoped<IFilterBuilderService, FilterBuilderService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeFileService, EmployeeFileService>();
 
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", policy =>
-    {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-    });
+builder.Services.AddCors(options => {
+    options.AddPolicy("CorsPolicy",
+        builder => {
+            builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
 });
 
 builder.Services.AddControllers();

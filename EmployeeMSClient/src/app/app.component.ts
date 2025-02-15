@@ -1,11 +1,14 @@
+// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { EmployeeDashboardComponent } from './core/components/employee-dashboard/employee-dashboard.component';
+import { RouterModule } from '@angular/router'; // Import RouterModule for routing
+import { SharedModule } from './core/_shared/shared.module';
 
 @Component({
   selector: 'app-root',
-  imports: [EmployeeDashboardComponent],
+  standalone: true, // This marks the component as standalone
+  imports: [RouterModule,SharedModule], // Ensure RouterModule is imported
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'EmployeeMSClient';

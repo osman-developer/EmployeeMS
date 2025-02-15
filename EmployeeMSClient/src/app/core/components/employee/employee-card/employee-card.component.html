@@ -1,0 +1,24 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-light rounded">
+        <img *ngIf="employeeDTO?.employeeFiles?.[0]?.filePath" [src]="employeeDTO?.employeeFiles?.[0]?.filePath"
+          class="card-img-top" alt="Profile Picture" style="max-width: 300px; margin: 0 auto;">
+
+        <div class="card-body">
+          <h2 class="card-title text-center">{{ employeeDTO?.name }}</h2>
+          <p class="card-text text-center text-muted">{{ employeeDTO?.jobTitle }}</p>
+          <div class="list-group">
+            <li class="list-group-item"><strong>Email:</strong> {{ employeeDTO?.email }}</li>
+            <li class="list-group-item"><strong>Phone:</strong> {{ employeeDTO?.phoneNumber }}</li>
+            <li class="list-group-item"><strong>Start Date:</strong> {{ employeeDTO?.startDate | date: 'yyyy-MM-dd' }}
+            </li>
+            <li class="list-group-item"><strong>Position:</strong> {{ employeeDTO?.jobTitle }}</li>
+            <!-- Add more fields here as necessary -->
+          </div>
+          <a [routerLink]="['/employee']" class="btn btn-secondary mt-3 w-100">Back to Employees List</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
