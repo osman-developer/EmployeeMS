@@ -20,6 +20,7 @@ export class EmployeeCardComponent {
 
   employeeDTO!: EmployeeDTO;
   employeeId: number | null = null;
+  isEditMode: boolean = false;
 
   ngOnInit(): void {
     this.employeeId = parseInt(this.route.snapshot.paramMap.get('id')!);
@@ -29,16 +30,27 @@ export class EmployeeCardComponent {
     }
   }
 
+  saveChanges() {
+    // Implement your logic to save the changes (e.g., call a service to update the employee info)
+    console.log('Employee information saved', this.employeeDTO);
+    this.isEditMode = false; // Switch back to view mode after saving
+  }
   getEmployeeById(employeeId: number) {
     this._employeeService.getById(employeeId).subscribe({
       next: (res) => {
         this.employeeDTO = res;
         this.employeeDTO?.employeeFiles?.forEach((item: EmployeeFileDTO) => {
           if (item.employeeFileTypeId === 1) {
-            let photoUrl = envConstants.endpointForPhotos + '/Photos/' + item.filePath.split('/').pop();
-            // Sanitize the URL and ensure it's in the correct format for binding to [src]
-            let sanitizedUrl: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(photoUrl);
-            item.filePath = sanitizedUrl.toString();
+            let photoUrl =
+              envConstants.endpointForPhotos +
+              '/Photos/' +
+              item.filePath.split('/').pop();
+            console.log('photoUrl', photoUrl); // Check the output of the URL
+
+            // Sanitize the URL before using it
+            let sanitizedUrl: SafeUrl =
+              this.sanitizer.bypassSecurityTrustUrl(photoUrl);
+            item.filePath = sanitizedUrl; // Store the sanitized URL in the filePath
           }
         });
       },
@@ -47,5 +59,4 @@ export class EmployeeCardComponent {
       },
     });
   }
-  
 }

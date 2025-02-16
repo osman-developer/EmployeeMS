@@ -1,8 +1,8 @@
 // src/app/core/components/employee/employee.module.ts
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';  // Ensure RouterModule is imported
-
+import { RouterModule } from '@angular/router'; // Ensure RouterModule is imported
+import { FormsModule } from '@angular/forms';
 import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 import { EmployeeCardComponent } from './employee-card/employee-card.component';
 
@@ -10,13 +10,15 @@ import { EmployeeCardComponent } from './employee-card/employee-card.component';
   declarations: [EmployeeDashboardComponent, EmployeeCardComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([  // Define child routes for lazy-loaded module
+    FormsModule,
+    RouterModule.forChild([
+      // Define child routes for lazy-loaded module
       {
-        path: '',  // Default route when accessing '/employee'
+        path: '', // Default route when accessing '/employee'
         component: EmployeeDashboardComponent,
       },
       {
-        path: ':id',  // Route for individual employee details
+        path: ':id', // Route for individual employee details
         component: EmployeeCardComponent,
       },
     ]),

@@ -12,7 +12,7 @@ export interface EmployeeDTO {
 }
 
 export interface EmployeeFileDTO {
-  filePath: string;
+  filePath: any;
   employeeId: number;
   employeeFileTypeId: number;
 }

@@ -6,17 +6,44 @@
           class="card-img-top" alt="Profile Picture" style="max-width: 300px; margin: 0 auto;">
 
         <div class="card-body">
-          <h2 class="card-title text-center">{{ employeeDTO?.name }}</h2>
-          <p class="card-text text-center text-muted">{{ employeeDTO?.jobTitle }}</p>
+          <h2 class="card-title text-center">
+            <span *ngIf="!isEditMode">{{ employeeDTO?.name }}</span>
+            <input *ngIf="isEditMode" [(ngModel)]="employeeDTO?.name" class="form-control" />
+          </h2>
+
+          <p class="card-text text-center text-muted">
+            <span *ngIf="!isEditMode">{{ employeeDTO?.jobTitle }}</span>
+            <input *ngIf="isEditMode" [(ngModel)]="employeeDTO?.jobTitle" class="form-control" />
+          </p>
+
           <div class="list-group">
-            <li class="list-group-item"><strong>Email:</strong> {{ employeeDTO?.email }}</li>
-            <li class="list-group-item"><strong>Phone:</strong> {{ employeeDTO?.phoneNumber }}</li>
-            <li class="list-group-item"><strong>Start Date:</strong> {{ employeeDTO?.startDate | date: 'yyyy-MM-dd' }}
+            <li class="list-group-item">
+              <strong>Email:</strong>
+              <span *ngIf="!isEditMode">{{ employeeDTO?.email }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="employeeDTO?.email" class="form-control" />
             </li>
-            <li class="list-group-item"><strong>Position:</strong> {{ employeeDTO?.jobTitle }}</li>
-            <!-- Add more fields here as necessary -->
+            <li class="list-group-item">
+              <strong>Phone:</strong>
+              <span *ngIf="!isEditMode">{{ employeeDTO?.phoneNumber }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="employeeDTO?.phoneNumber" class="form-control" />
+            </li>
+            <li class="list-group-item">
+              <strong>Start Date:</strong>
+              <span *ngIf="!isEditMode">{{ employeeDTO?.startDate | date: 'yyyy-MM-dd' }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="employeeDTO?.startDate" type="date" class="form-control" />
+            </li>
+            <li class="list-group-item">
+              <strong>Position:</strong>
+              <span *ngIf="!isEditMode">{{ employeeDTO?.jobTitle }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="employeeDTO?.jobTitle" class="form-control" />
+            </li>
           </div>
-          <a [routerLink]="['/employee']" class="btn btn-secondary mt-3 w-100">Back to Employees List</a>
+
+          <div class="d-flex justify-content-between mt-3">
+            <a *ngIf="!isEditMode" (click)="isEditMode = true" class="btn btn-primary">Edit</a>
+            <a *ngIf="isEditMode" (click)="saveChanges()" class="btn btn-success">Save</a>
+            <a [routerLink]="['/employee']" class="btn btn-secondary">Back to Employees List</a>
+          </div>
         </div>
       </div>
     </div>
