@@ -5,8 +5,7 @@ import { SharedModule } from './core/_shared/shared.module';
 
 @Component({
   selector: 'app-root',
-  standalone: true, // This marks the component as standalone
-  imports: [RouterModule,SharedModule], // Ensure RouterModule is imported
+  imports: [RouterModule, SharedModule], // Ensure RouterModule is imported
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

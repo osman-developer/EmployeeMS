@@ -7,12 +7,13 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { untilDestroyed } from '../../../_services/until-destroy.service';
 import { HelperFunctionsService } from '../../../_helpers/helperFunctions.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employee-card',
   standalone: false,
   templateUrl: './employee-card.component.html',
-  styleUrls: ['./employee-card.component.css'],
+  styleUrls: ['./employee-card.component.css']
 })
 export class EmployeeCardComponent implements OnInit {
   employeeDTO!: EmployeeDTO;
@@ -27,7 +28,8 @@ export class EmployeeCardComponent implements OnInit {
     private _employeeService: EmployeeService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private helperFunctionsService: HelperFunctionsService
+    private helperFunctionsService: HelperFunctionsService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -136,7 +138,12 @@ export class EmployeeCardComponent implements OnInit {
         .postForm(this.employeeDTO)
         .pipe(this.destroy$())
         .subscribe({
-          next: () => {},
+          next: () => {
+            this.toastr.success(
+              'The employee record has been successfully updated. Your changes have been saved.',
+              'Employee Record Updated'
+            );
+          },
           error: (err) => {
             console.error('Error saving employee data:', err);
           },
