@@ -4,6 +4,7 @@ using EmployeeMS.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeMS.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeeMSContext))]
-    partial class EmployeeMSContextModelSnapshot : ModelSnapshot
+    [Migration("20250217093931_change-date-type")]
+    partial class changedatetype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,19 +126,19 @@ namespace EmployeeMS.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2025, 2, 18, 9, 36, 59, 423, DateTimeKind.Local).AddTicks(977),
+                            CreationDate = new DateTime(2025, 2, 17, 11, 39, 30, 623, DateTimeKind.Local).AddTicks(1959),
                             TypeName = "profile_picture"
                         },
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2025, 2, 18, 9, 36, 59, 423, DateTimeKind.Local).AddTicks(1031),
+                            CreationDate = new DateTime(2025, 2, 17, 11, 39, 30, 623, DateTimeKind.Local).AddTicks(2014),
                             TypeName = "id_picture"
                         },
                         new
                         {
                             Id = 3,
-                            CreationDate = new DateTime(2025, 2, 18, 9, 36, 59, 423, DateTimeKind.Local).AddTicks(1033),
+                            CreationDate = new DateTime(2025, 2, 17, 11, 39, 30, 623, DateTimeKind.Local).AddTicks(2016),
                             TypeName = "attachment"
                         });
                 });

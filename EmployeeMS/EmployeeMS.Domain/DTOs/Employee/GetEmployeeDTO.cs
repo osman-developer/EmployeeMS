@@ -17,8 +17,8 @@ namespace EmployeeMS.Domain.DTOs.Employee
         public DateOnly DateOfBirth { get; set; }
         public string JobTitle { get; set; }
         public decimal Salary { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; } = null;
+        public DateOnly StartDate { get; set; }
+        public DateOnly? EndDate { get; set; } = null;
         public ICollection<GetEmployeeFileDTO> EmployeeFiles { get; set; }
     }
 }

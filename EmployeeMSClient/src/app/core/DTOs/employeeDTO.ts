@@ -7,7 +7,7 @@ export interface EmployeeDTO {
   jobTitle: string;
   salary: number;
   startDate: string;
-  endDate: any;
+  endDate: string | '';
   employeeFiles?: EmployeeFileDTO[];
 }
 
