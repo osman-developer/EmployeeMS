@@ -16,7 +16,6 @@ export class EmployeeDashboardComponent implements OnInit {
   paginationResponse!: PagingResponse;
   //for pagination
   pageIndex: number = 1;
-  totalRecords: number = 0;
   pageSize: number = appConstants.pageSize;
   totalCount!: number;
   constructor(private _employeeService: EmployeeService) {}
@@ -33,7 +32,6 @@ export class EmployeeDashboardComponent implements OnInit {
     };
     this._employeeService.getAllPaginated(request).subscribe({
       next: (res) => {
-        console.log(res);
         this.paginationResponse = res;
         this.employees = res.items;
         (this.paginationResponse.currentPage = res.currentPage),
@@ -48,7 +46,7 @@ export class EmployeeDashboardComponent implements OnInit {
   onPageChanged(event: any) {
     if (this.paginationResponse.currentPage !== event) {
       this.paginationResponse.currentPage = event;
-      this.pageIndex = event;  // Update the page index to match the new page
+      this.pageIndex = event; // Update the page index to match the new page
       this.getEmployeesPaginated();
     }
   }
