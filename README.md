@@ -25,7 +25,13 @@ Additionally, the system allows users to **upload images**, **IDs**, and **attac
   - Includes the functionality for managing and retrieving employee-related files (images, IDs, attachments).
 
 - **Pagination**:
-  - The pagination functionality is **generic** and can be easily implemented in any service that requires paginated results.
+  - The pagination functionality is **generic** and can be easily implemented in any service that requires paginated results. The pagination is done on the level of the database to ensure optimal query performance.
+    
+- **Lazy Loading**:
+  - The Angular app has the Lazy Loading feature in which the EmployeeCard and EmployeeDashboard are lazy loaded on demand.
+
+- **Angular Pagination**:
+  - The pagination functionality in the angular app is **generic** and can be easily implemented in any component that requires paginated results.
 
 ## Features
 
