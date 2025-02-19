@@ -4,13 +4,11 @@
       <div class="card shadow-lg border-light rounded">
         <form [formGroup]="employeeForm" (ngSubmit)="saveChanges()">
           <div class="card-body">
+
             <!-- Employee Picture Section -->
             <div class="text-center">
-              <!-- Display existing image if available -->
               <img *ngIf="employeeDTO?.employeeFiles?.[0]?.filePath" [src]="employeeDTO?.employeeFiles?.[0]?.filePath"
                 class="card-img-top" alt="Profile Picture" style="max-width: 300px; margin: 0 auto;">
-
-              <!-- Input to upload new image when in edit mode -->
               <div *ngIf="isEditMode">
                 <label for="picture" class="btn btn-outline-primary mt-3">
                   <i class="fas fa-upload"></i> Upload New Picture
@@ -27,51 +25,58 @@
               <span *ngIf="!isEditMode">{{ employeeDTO?.name }}</span>
               <input *ngIf="isEditMode" formControlName="name" class="form-control" />
             </h2>
-
             <p class="card-text text-center text-muted">
               <span *ngIf="!isEditMode">{{ employeeDTO?.jobTitle }}</span>
               <input *ngIf="isEditMode" formControlName="jobTitle" class="form-control" />
             </p>
 
-            <div class="list-group">
-              <li class="list-group-item">
-                <strong>Email:</strong>
-                <span *ngIf="!isEditMode">{{ employeeDTO?.email }}</span>
-                <input *ngIf="isEditMode" formControlName="email" class="form-control" />
-              </li>
-              <li class="list-group-item">
-                <strong>Phone:</strong>
-                <span *ngIf="!isEditMode">{{ employeeDTO?.phoneNumber }}</span>
-                <input *ngIf="isEditMode" formControlName="phoneNumber" class="form-control" />
-              </li>
-              <li class="list-group-item">
-                <strong>Birth Date:</strong>
-                <span *ngIf="!isEditMode">{{ employeeDTO?.dateOfBirth | date: 'yyyy-MM-dd' }}</span>
-                <input *ngIf="isEditMode" formControlName="dateOfBirth" type="date" class="form-control" />
-              </li>
-              <li class="list-group-item">
-                <strong>Start Date:</strong>
-                <span *ngIf="!isEditMode">{{ employeeDTO?.startDate | date: 'yyyy-MM-dd' }}</span>
-                <input *ngIf="isEditMode" formControlName="startDate" type="date" class="form-control" />
-              </li>
-              <li class="list-group-item">
-                <strong>End Date:</strong>
-                <span *ngIf="!isEditMode">{{ employeeDTO?.endDate | date: 'yyyy-MM-dd' }}</span>
-                <input *ngIf="isEditMode" formControlName="endDate" type="date" class="form-control" />
-              </li>
+            <!-- Start of the form fields section -->
+            <div class="row">
+              <!-- Left Column -->
+              <div class="col-md-6">
+                <div class="list-group">
+                  <li class="list-group-item">
+                    <strong class="mr-2">Email:</strong>
+                    <span *ngIf="!isEditMode">{{ employeeDTO?.email }}</span>
+                    <input *ngIf="isEditMode" formControlName="email" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Phone:</strong>
+                    <span *ngIf="!isEditMode">{{ employeeDTO?.phoneNumber }}</span>
+                    <input *ngIf="isEditMode" formControlName="phoneNumber" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Birth Date:</strong>
+                    <span *ngIf="!isEditMode">{{ employeeDTO?.dateOfBirth | date: 'yyyy-MM-dd' }}</span>
+                    <input *ngIf="isEditMode" formControlName="dateOfBirth" type="date" class="form-control" />
+                  </li>
+                </div>
+              </div>
 
-              <li class="list-group-item">
-                <strong>Position:</strong>
-                <span *ngIf="!isEditMode">{{ employeeDTO?.jobTitle }}</span>
-                <input *ngIf="isEditMode" formControlName="jobTitle" class="form-control" />
-              </li>
-              <li class="list-group-item">
-                <strong>Salary:</strong>
-                <span *ngIf="!isEditMode">{{ employeeDTO?.salary }}</span>
-                <input *ngIf="isEditMode" formControlName="salary" class="form-control" />
-              </li>
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <div class="list-group">
+                  <li class="list-group-item">
+                    <strong class="mr-2">Start Date:</strong>
+                    <span *ngIf="!isEditMode">{{ employeeDTO?.startDate | date: 'yyyy-MM-dd' }}</span>
+                    <input *ngIf="isEditMode" formControlName="startDate" type="date" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">End Date:</strong>
+                    <span *ngIf="!isEditMode">{{ employeeDTO?.endDate | date: 'yyyy-MM-dd' }}</span>
+                    <input *ngIf="isEditMode" formControlName="endDate" type="date" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Salary:</strong>
+                    <span *ngIf="!isEditMode">{{ employeeDTO?.salary }}</span>
+                    <input *ngIf="isEditMode" formControlName="salary" class="form-control" />
+                  </li>
+                </div>
+              </div>
             </div>
+            <!-- End of the form fields section -->
 
+            <!-- Action Buttons -->
             <div class="d-flex justify-content-between mt-3">
               <a *ngIf="!isEditMode" (click)="isEditMode = true" class="btn btn-primary">Edit</a>
               <button *ngIf="isEditMode" type="submit" class="btn btn-success">Save</button>

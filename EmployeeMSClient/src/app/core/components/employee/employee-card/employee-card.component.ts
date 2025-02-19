@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-employee-card',
   standalone: false,
   templateUrl: './employee-card.component.html',
-  styleUrls: ['./employee-card.component.css']
+  styleUrls: ['./employee-card.component.css'],
 })
 export class EmployeeCardComponent implements OnInit {
   employeeDTO!: EmployeeDTO;
@@ -139,10 +139,7 @@ export class EmployeeCardComponent implements OnInit {
         .pipe(this.destroy$())
         .subscribe({
           next: () => {
-            this.toastr.success(
-              'The employee record has been successfully updated. Your changes have been saved.',
-              'Employee Record Updated'
-            );
+            this.toastr.success('Employee Record Updated');
           },
           error: (err) => {
             console.error('Error saving employee data:', err);
