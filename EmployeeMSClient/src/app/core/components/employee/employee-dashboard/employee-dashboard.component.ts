@@ -18,7 +18,7 @@ export class EmployeeDashboardComponent implements OnInit {
   pageIndex: number = 1;
   totalRecords: number = 0;
   pageSize: number = appConstants.pageSize;
-
+  totalCount!: number;
   constructor(private _employeeService: EmployeeService) {}
 
   ngOnInit(): void {
@@ -36,10 +36,30 @@ export class EmployeeDashboardComponent implements OnInit {
         console.log(res);
         this.paginationResponse = res;
         this.employees = res.items;
+        (this.paginationResponse.currentPage = res.currentPage),
+          (this.paginationResponse.pageSize = res.pageSize),
+          (this.totalCount = res.totalCount);
       },
       error: (err) => {
         console.error('Error fetching employees:', err);
       },
     });
+  }
+  onPageChanged(event: any) {
+    if (this.paginationResponse.currentPage !== event) {
+      this.paginationResponse.currentPage = event;
+      this.pageIndex = event;  // Update the page index to match the new page
+      this.getEmployeesPaginated();
+    }
+  }
+  onSearch() {
+    // this.shopParams.search = this.searchTerm?.nativeElement.value;
+    // this.shopParams.pageNumber = 1;
+    // this.getProducts();
+  }
+  onReset() {
+    // this.searchTerm = undefined;
+    // this.shopParams = new ShopParams();
+    // this.getProducts();
   }
 }

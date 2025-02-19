@@ -4,13 +4,25 @@ import { NavBarComponent } from './nav-bar/nav-bar.component'; // Correct relati
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { PagerComponent } from './pager/pager.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { PagingHeaderComponent } from './paging-header/paging-header.component';
 @NgModule({
-  declarations: [NavBarComponent],
-  imports: [CommonModule, FormsModule, RouterModule, ToastrModule],
+  declarations: [NavBarComponent, PagerComponent, PagingHeaderComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    ToastrModule,
+    PaginationModule.forRoot(),
+  ],
   providers: [DatePipe], // Add DatePipe here
   exports: [
     NavBarComponent, // Export it to be used outside
     ToastrModule,
+    PagerComponent,
+    PagingHeaderComponent,
+    PaginationModule,
   ],
 })
 export class SharedModule {}

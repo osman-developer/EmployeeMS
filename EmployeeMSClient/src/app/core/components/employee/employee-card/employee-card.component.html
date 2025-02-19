@@ -1,13 +1,13 @@
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow-lg border-light rounded">
+      <div class="card shadow-lg border-light rounded" *ngIf="employeeDTO">
         <form [formGroup]="employeeForm" (ngSubmit)="saveChanges()">
           <div class="card-body">
 
             <!-- Employee Picture Section -->
             <div class="text-center">
-              <img *ngIf="employeeDTO?.employeeFiles?.[0]?.filePath" [src]="employeeDTO?.employeeFiles?.[0]?.filePath"
+              <img *ngIf="employeeDTO?.employeeFiles?.[0]?.filePath" [src]="employeeDTO.employeeFiles?.[0]?.filePath"
                 class="card-img-top" alt="Profile Picture" style="max-width: 300px; margin: 0 auto;">
               <div *ngIf="isEditMode">
                 <label for="picture" class="btn btn-outline-primary mt-3">
@@ -22,11 +22,11 @@
 
             <!-- Other form fields -->
             <h2 class="card-title text-center">
-              <span *ngIf="!isEditMode">{{ employeeDTO?.name }}</span>
+              <span *ngIf="!isEditMode">{{ employeeDTO.name }}</span>
               <input *ngIf="isEditMode" formControlName="name" class="form-control" />
             </h2>
             <p class="card-text text-center text-muted">
-              <span *ngIf="!isEditMode">{{ employeeDTO?.jobTitle }}</span>
+              <span *ngIf="!isEditMode">{{ employeeDTO.jobTitle }}</span>
               <input *ngIf="isEditMode" formControlName="jobTitle" class="form-control" />
             </p>
 
@@ -37,17 +37,17 @@
                 <div class="list-group">
                   <li class="list-group-item">
                     <strong class="mr-2">Email:</strong>
-                    <span *ngIf="!isEditMode">{{ employeeDTO?.email }}</span>
+                    <span *ngIf="!isEditMode">{{ employeeDTO.email }}</span>
                     <input *ngIf="isEditMode" formControlName="email" class="form-control" />
                   </li>
                   <li class="list-group-item">
                     <strong class="mr-2">Phone:</strong>
-                    <span *ngIf="!isEditMode">{{ employeeDTO?.phoneNumber }}</span>
+                    <span *ngIf="!isEditMode">{{ employeeDTO.phoneNumber }}</span>
                     <input *ngIf="isEditMode" formControlName="phoneNumber" class="form-control" />
                   </li>
                   <li class="list-group-item">
                     <strong class="mr-2">Birth Date:</strong>
-                    <span *ngIf="!isEditMode">{{ employeeDTO?.dateOfBirth | date: 'yyyy-MM-dd' }}</span>
+                    <span *ngIf="!isEditMode">{{ employeeDTO.dateOfBirth | date: 'yyyy-MM-dd' }}</span>
                     <input *ngIf="isEditMode" formControlName="dateOfBirth" type="date" class="form-control" />
                   </li>
                 </div>
@@ -58,17 +58,17 @@
                 <div class="list-group">
                   <li class="list-group-item">
                     <strong class="mr-2">Start Date:</strong>
-                    <span *ngIf="!isEditMode">{{ employeeDTO?.startDate | date: 'yyyy-MM-dd' }}</span>
+                    <span *ngIf="!isEditMode">{{ employeeDTO.startDate | date: 'yyyy-MM-dd' }}</span>
                     <input *ngIf="isEditMode" formControlName="startDate" type="date" class="form-control" />
                   </li>
                   <li class="list-group-item">
                     <strong class="mr-2">End Date:</strong>
-                    <span *ngIf="!isEditMode">{{ employeeDTO?.endDate | date: 'yyyy-MM-dd' }}</span>
+                    <span *ngIf="!isEditMode">{{ employeeDTO.endDate | date: 'yyyy-MM-dd' }}</span>
                     <input *ngIf="isEditMode" formControlName="endDate" type="date" class="form-control" />
                   </li>
                   <li class="list-group-item">
                     <strong class="mr-2">Salary:</strong>
-                    <span *ngIf="!isEditMode">{{ employeeDTO?.salary }}</span>
+                    <span *ngIf="!isEditMode">{{ employeeDTO.salary }}</span>
                     <input *ngIf="isEditMode" formControlName="salary" class="form-control" />
                   </li>
                 </div>
