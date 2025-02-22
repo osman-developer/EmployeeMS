@@ -9,6 +9,7 @@ export interface EmployeeDTO {
   startDate: string;
   endDate: string | '';
   employeeFiles?: EmployeeFileDTO[];
+  profilePicture?: File | null;
 }
 
 export interface EmployeeFileDTO {

@@ -4,7 +4,11 @@ import { Employee } from '../../../models/employee.model';
 import { PagingRequest } from '../../../models/pagination-models/pagination-request.model';
 import { PagingResponse } from '../../../models/pagination-models/paging-response.model';
 import { appConstants } from '../../../_constants/app-constants';
-
+import { MatDialog } from '@angular/material/dialog';
+import { AddEmployeeComponent } from '../add-employee/add-employee.component';
+import { EmployeeDTO } from '../../../DTOs/employeeDTO';
+import { untilDestroyed } from '../../../_services/until-destroy.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-employee-dashboard',
   standalone: false,
@@ -12,16 +16,61 @@ import { appConstants } from '../../../_constants/app-constants';
   styleUrl: './employee-dashboard.component.css',
 })
 export class EmployeeDashboardComponent implements OnInit {
+  private destroy$ = untilDestroyed();
   employees: Employee[] = [];
   paginationResponse!: PagingResponse;
   //for pagination
   pageIndex: number = 1;
   pageSize: number = appConstants.pageSize;
   totalCount!: number;
-  constructor(private _employeeService: EmployeeService) {}
+
+  constructor(
+    private _employeeService: EmployeeService,
+    public dialog: MatDialog,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getEmployeesPaginated();
+  }
+
+  showModal = false;
+
+  openAddEmployeeModal() {
+    const dialogRef = this.dialog.open(AddEmployeeComponent, {
+      width: '600px', // Adjust the size as needed
+    });
+
+    // Handle employee added event when the dialog is closed
+    dialogRef.componentInstance.employeeAdded.subscribe(
+      (employee: EmployeeDTO) => {
+        console.log("x")
+        this.addEmployee(employee);
+      }
+    );
+
+    dialogRef.componentInstance.closeModal.subscribe(() => {
+      dialogRef.close(); // Close the dialog when requested
+    });
+  }
+
+  // Handle the event when an employee is added
+  addEmployee(employee: EmployeeDTO) {
+    console.log("empl",employee)
+    this._employeeService
+      .postForm(employee)
+      .pipe(this.destroy$())
+      .subscribe({
+        next: () => {
+          this.toastr.success('Employee Record Added.');
+          this.getEmployeesPaginated();
+        },
+        error: (err) => {
+          console.error('Error saving employee data:', err);
+        },
+      });
+
+    console.log('Employee added:', employee);
   }
 
   getEmployeesPaginated() {

@@ -1,0 +1,112 @@
+.mat-dialog-container {
+  max-width: 900px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+  
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mat-dialog-container.scrollable {
+  overflow-y: auto;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dialog-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+.profile-picture-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.preview-image img {
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 10px;
+}
+
+.profile-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-right: 20px;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+}
+
+input[type="text"], input[type="email"], input[type="number"], input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+.close-btn {
+  position: absolute;
+  top: 0px;
+  right: 30px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #000;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #f00; /* Change color on hover if desired */
+}

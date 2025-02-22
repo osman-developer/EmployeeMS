@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -18,6 +19,7 @@ bootstrapApplication(AppComponent, {
         preventDuplicates: true,
       })
     ),
-    importProvidersFrom(BrowserAnimationsModule), // Add BrowserAnimationsModule here
+    importProvidersFrom(BrowserAnimationsModule),
+    provideAnimationsAsync(), // Add BrowserAnimationsModule here
   ],
 }).catch((err) => console.error(err));

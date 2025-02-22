@@ -23,6 +23,8 @@ import { PagingHeaderComponent } from './paging-header/paging-header.component';
     PagerComponent,
     PagingHeaderComponent,
     PaginationModule,
+    CommonModule,
+    FormsModule,
   ],
 })
 export class SharedModule {}

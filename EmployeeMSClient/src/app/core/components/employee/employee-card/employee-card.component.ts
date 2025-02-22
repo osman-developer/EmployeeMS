@@ -16,13 +16,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./employee-card.component.css'],
 })
 export class EmployeeCardComponent implements OnInit {
+  private destroy$ = untilDestroyed();
   employeeDTO!: EmployeeDTO;
   employeeId: number | null = null;
   isEditMode = false;
   employeeForm!: FormGroup;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
-  private destroy$ = untilDestroyed();
 
   constructor(
     private _employeeService: EmployeeService,
