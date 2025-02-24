@@ -54,8 +54,10 @@ namespace EmployeeMS.Service.Services.AppServices
         {
             if (employee.Id != null)
             {
-                var existingEmployee = _mapper.Map<Employee>(employee);
-                return _repo.Update(existingEmployee);
+                var existingEmployeeDTO = _mapper.Map<Employee>(employee);
+                var updatedEmp = _repo.Update(existingEmployeeDTO);
+                _employeeFileService.Save(employee.EmployeeFiles, existingEmployeeDTO.Id);
+                return updatedEmp;
             }
 
             var employeeDTO = _mapper.Map<Employee>(employee);
