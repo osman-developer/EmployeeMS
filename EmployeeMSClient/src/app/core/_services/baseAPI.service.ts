@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { AddEmployeeFileDTO } from '../DTOs/AddEmployeeDTO';
 
 @Injectable({ providedIn: 'root' })
 export class BaseApiService {
@@ -51,10 +52,36 @@ export class BaseApiService {
       .pipe(catchError(this.handleError));
   }
 
-  // POST request for FormData (file upload or multipart form data)
-  public postForm(body: any): Observable<any> {
+  public postForm(body: any, fileKey: string = 'files'): Observable<any> {
     const formData = new FormData();
-    Object.keys(body).forEach((key) => formData.append(key, body[key]));
+
+    // Append all fields except those containing files to formData
+    Object.keys(body).forEach((key) => {
+      if (key !== fileKey) {
+        formData.append(key, body[key]);
+      }
+    });
+
+    // Append files to FormData in the structure Postman uses
+    if (body[fileKey] && body[fileKey].length > 0) {
+      body[fileKey].forEach((fileData: any, index: number) => {
+        // Append the file itself
+        formData.append(
+          `${fileKey}[${index}].file`,
+          fileData.file,
+          fileData.file.name
+        );
+
+        // Append other file metadata
+        Object.keys(fileData)
+          .filter((key) => key !== 'file')
+          .forEach((key) => {
+            formData.append(`${fileKey}[${index}].${key}`, fileData[key]);
+          });
+      });
+    }
+
+    // Send the request to the backend
     return this.http
       .post(`${this.apiUrl}/save`, formData)
       .pipe(catchError(this.handleError));

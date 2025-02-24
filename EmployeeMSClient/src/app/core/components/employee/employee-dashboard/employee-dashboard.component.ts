@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../../_services/employeeAPI.service';
-import { Employee } from '../../../models/employee.model';
 import { PagingRequest } from '../../../models/pagination-models/pagination-request.model';
 import { PagingResponse } from '../../../models/pagination-models/paging-response.model';
 import { appConstants } from '../../../_constants/app-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
-import { EmployeeDTO } from '../../../DTOs/employeeDTO';
+import { GetEmployeeDTO } from '../../../DTOs/GetEmployeeDTO';
 import { untilDestroyed } from '../../../_services/until-destroy.service';
 import { ToastrService } from 'ngx-toastr';
+import { AddEmployeeDTO } from '../../../DTOs/AddEmployeeDTO';
 @Component({
   selector: 'app-employee-dashboard',
   standalone: false,
@@ -17,12 +17,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeeDashboardComponent implements OnInit {
   private destroy$ = untilDestroyed();
-  employees: Employee[] = [];
-  paginationResponse!: PagingResponse;
+  employees: GetEmployeeDTO[] = [];
+  showModal = false;
   //for pagination
   pageIndex: number = 1;
   pageSize: number = appConstants.pageSize;
   totalCount!: number;
+  paginationResponse!: PagingResponse;
 
   constructor(
     private _employeeService: EmployeeService,
@@ -34,8 +35,6 @@ export class EmployeeDashboardComponent implements OnInit {
     this.getEmployeesPaginated();
   }
 
-  showModal = false;
-
   openAddEmployeeModal() {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '600px', // Adjust the size as needed
@@ -43,8 +42,7 @@ export class EmployeeDashboardComponent implements OnInit {
 
     // Handle employee added event when the dialog is closed
     dialogRef.componentInstance.employeeAdded.subscribe(
-      (employee: EmployeeDTO) => {
-        console.log("x")
+      (employee: AddEmployeeDTO) => {
         this.addEmployee(employee);
       }
     );
@@ -55,10 +53,9 @@ export class EmployeeDashboardComponent implements OnInit {
   }
 
   // Handle the event when an employee is added
-  addEmployee(employee: EmployeeDTO) {
-    console.log("empl",employee)
+  addEmployee(employee: AddEmployeeDTO) {
     this._employeeService
-      .postForm(employee)
+      .addEmployee(employee)
       .pipe(this.destroy$())
       .subscribe({
         next: () => {
@@ -69,8 +66,6 @@ export class EmployeeDashboardComponent implements OnInit {
           console.error('Error saving employee data:', err);
         },
       });
-
-    console.log('Employee added:', employee);
   }
 
   getEmployeesPaginated() {

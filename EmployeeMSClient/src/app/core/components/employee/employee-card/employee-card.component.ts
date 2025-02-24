@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../../_services/employeeAPI.service';
-import { EmployeeDTO, EmployeeFileDTO } from '../../../DTOs/employeeDTO';
+import {
+  GetEmployeeDTO,
+  GetEmployeeFileDTO,
+} from '../../../DTOs/GetEmployeeDTO';
 import { ActivatedRoute } from '@angular/router';
 import { envConstants } from '../../../_constants/environmnet-constants';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -17,7 +20,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EmployeeCardComponent implements OnInit {
   private destroy$ = untilDestroyed();
-  employeeDTO!: EmployeeDTO;
+  getEmployeeDTO!: GetEmployeeDTO;
   employeeId: number | null = null;
   isEditMode = false;
   employeeForm!: FormGroup;
@@ -55,7 +58,7 @@ export class EmployeeCardComponent implements OnInit {
   fetchEmployeeData(employeeId: number): void {
     this._employeeService.getById(employeeId).subscribe({
       next: (res) => {
-        this.employeeDTO = res;
+        this.getEmployeeDTO = res;
         this.formatEmployeeData();
         this.updateFormValues();
       },
@@ -66,17 +69,17 @@ export class EmployeeCardComponent implements OnInit {
   }
 
   formatEmployeeData(): void {
-    this.employeeDTO.startDate = this.helperFunctionsService.formatDate(
-      this.employeeDTO.startDate
+    this.getEmployeeDTO.startDate = this.helperFunctionsService.formatDate(
+      this.getEmployeeDTO.startDate
     );
-    this.employeeDTO.endDate = this.helperFunctionsService.formatDate(
-      this.employeeDTO.endDate
+    this.getEmployeeDTO.endDate = this.helperFunctionsService.formatDate(
+      this.getEmployeeDTO.endDate
     );
-    this.employeeDTO.dateOfBirth = this.helperFunctionsService.formatDate(
-      this.employeeDTO.dateOfBirth
+    this.getEmployeeDTO.dateOfBirth = this.helperFunctionsService.formatDate(
+      this.getEmployeeDTO.dateOfBirth
     );
 
-    this.employeeDTO?.employeeFiles?.forEach((item: EmployeeFileDTO) => {
+    this.getEmployeeDTO?.employeeFiles?.forEach((item: GetEmployeeFileDTO) => {
       if (item.employeeFileTypeId === 1) {
         const photoUrl = `${
           envConstants.endpointForPhotos
@@ -90,14 +93,14 @@ export class EmployeeCardComponent implements OnInit {
 
   updateFormValues(): void {
     this.employeeForm.patchValue({
-      name: this.employeeDTO.name,
-      jobTitle: this.employeeDTO.jobTitle,
-      email: this.employeeDTO.email,
-      phoneNumber: this.employeeDTO.phoneNumber,
-      startDate: this.employeeDTO.startDate,
-      endDate: this.employeeDTO.endDate ? this.employeeDTO.endDate : '',
-      dateOfBirth: this.employeeDTO.dateOfBirth,
-      salary: this.employeeDTO.salary,
+      name: this.getEmployeeDTO.name,
+      jobTitle: this.getEmployeeDTO.jobTitle,
+      email: this.getEmployeeDTO.email,
+      phoneNumber: this.getEmployeeDTO.phoneNumber,
+      startDate: this.getEmployeeDTO.startDate,
+      endDate: this.getEmployeeDTO.endDate ? this.getEmployeeDTO.endDate : '',
+      dateOfBirth: this.getEmployeeDTO.dateOfBirth,
+      salary: this.getEmployeeDTO.salary,
     });
   }
 
@@ -119,23 +122,22 @@ export class EmployeeCardComponent implements OnInit {
 
       // If no new file is selected, keep the old image path
       // if (!this.selectedFile) {
-      //   formData.picture = this.employeeDTO?.employeeFiles?.[0]?.filePath || ''; // Set to an empty string or retain the existing path
+      //   formData.picture = this.getEmployeeDTO?.employeeFiles?.[0]?.filePath || ''; // Set to an empty string or retain the existing path
       // }
 
       // Update the employeeDTO with form values
-      this.employeeDTO = {
+      this.getEmployeeDTO = {
         ...formData,
         id: this.employeeId,
-        employeeFiles: this.employeeDTO?.employeeFiles,
+        employeeFiles: this.getEmployeeDTO?.employeeFiles,
       };
       // Handle file upload if a new image is selected
       if (this.selectedFile) {
         // Logic for file upload (you can call your API here)
-        console.log('File to upload:', this.selectedFile);
       }
 
       this._employeeService
-        .postForm(this.employeeDTO)
+        .postForm(this.getEmployeeDTO)
         .pipe(this.destroy$())
         .subscribe({
           next: () => {

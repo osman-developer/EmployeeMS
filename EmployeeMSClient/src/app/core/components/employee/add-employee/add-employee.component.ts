@@ -1,18 +1,23 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { EmployeeDTO, EmployeeFileDTO } from '../../../DTOs/employeeDTO';
+import {
+  AddEmployeeDTO,
+  AddEmployeeFileDTO,
+} from '../../../DTOs/AddEmployeeDTO';
 
 @Component({
   selector: 'app-add-employee',
   standalone: false,
+  // standalone: true,
+  // imports: [],
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css'],
 })
 export class AddEmployeeComponent {
-  employee = {} as EmployeeDTO;
+  employee = {} as AddEmployeeDTO;
   previewUrl: string | ArrayBuffer | null = null; // For previewing the selected image
   selectedImage: File | null = null; // To store the selected image file
 
-  @Output() employeeAdded = new EventEmitter<EmployeeDTO>();
+  @Output() employeeAdded = new EventEmitter<AddEmployeeDTO>();
   @Output() closeModal = new EventEmitter<void>();
 
   constructor() {}
@@ -23,7 +28,6 @@ export class AddEmployeeComponent {
   }
 
   onSubmit() {
-    console.log('Employee details submitted:', this.employee);
     this.employeeAdded.emit(this.employee);
     this.close(); // Close the dialog after submission
   }
@@ -31,7 +35,6 @@ export class AddEmployeeComponent {
   // Handle file change (for employee profile picture)
   onFileChange(event: any) {
     const files: FileList = event.target.files; // Get the selected files
-    console.log('Files selected:', files); // For debugging
 
     if (files && files.length > 0) {
       const selectedFile = files[0]; // Assuming only one file is selected
@@ -49,18 +52,18 @@ export class AddEmployeeComponent {
       // Store the selected image file
       this.selectedImage = selectedFile;
 
-      // Create EmployeeFileDTO and assign the file
-      const employeeFiles: EmployeeFileDTO[] = Array.from(files).map(
+      // Create employeeFiles array with file objects and fileTypeId metadata
+      const employeeFiles: AddEmployeeFileDTO[] = Array.from(files).map(
         (file: File) => ({
-          filePath: file,
-          employeeId: this.employee.id, // Assuming the employee ID is available
+          file: file, // Actual File object
           employeeFileTypeId: 1, // Default file type ID
         })
       );
 
-      this.employee.employeeFiles = employeeFiles; // Assign the files to the employee
+      // Assign the employeeFiles array to the employee object
+      this.employee.employeeFiles = employeeFiles;
 
-      // Add the scrollable class to the dialog container if there is an image
+      // Update the dialog scroll if necessary
       this.toggleDialogScroll();
     }
   }
