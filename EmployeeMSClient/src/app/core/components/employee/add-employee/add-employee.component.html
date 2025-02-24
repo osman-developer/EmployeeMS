@@ -7,7 +7,7 @@
   <!-- Profile Picture Section -->
   <div class="profile-picture-container">
     <label for="profile-picture" class="profile-label">Profile Picture</label>
-    <input id="profile-picture" type="file" (change)="onFileChange($event)" accept="image/*" />
+    <input id="profile-picture" type="file" (change)="onProfilePicChange($event)" accept="image/*" />
     <div *ngIf="previewUrl" class="preview-image">
       <img [src]="previewUrl" alt="Preview" class="preview-img" />
     </div>

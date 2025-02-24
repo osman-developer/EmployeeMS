@@ -32,8 +32,8 @@ export class AddEmployeeComponent {
     this.close(); // Close the dialog after submission
   }
 
-  // Handle file change (for employee profile picture)
-  onFileChange(event: any) {
+  // Handle profile pic change (for employee profile picture)
+  onProfilePicChange(event: any) {
     const files: FileList = event.target.files; // Get the selected files
 
     if (files && files.length > 0) {
