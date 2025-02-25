@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Employee Management System** is a project built using **.NET 8.0 & Angular 19.0.6**, following a clean layered architecture. This design ensures maintainability, scalability, and separation of concerns, making it easy to extend and modify in the future. The project implements a **Generic Repository** pattern, allowing for reusable data access logic across different services. The core components of the system are separated into distinct projects with specific responsibilities.
+The **Employee Management System**, this system enables you to create and manage employee profiles, including essential details such as their profile picture, passport photo, CV, ID picture, and other relevant documents. It also provides tools for managing employee contracts and tracking timesheets, ensuring efficient administration and record-keeping for all personnel-related information. It's built using **.NET 8.0 & Angular 19.0.6**, following a clean layered architecture. This design ensures maintainability, scalability, and separation of concerns, making it easy to extend and modify in the future. The project implements a **Generic Repository** pattern, allowing for reusable data access logic across different services. The core components of the system are separated into distinct projects with specific responsibilities.
 
 Additionally, the system allows users to **upload images**, **IDs**, and **attachments** related to employees, making it suitable for comprehensive employee data management.
 
