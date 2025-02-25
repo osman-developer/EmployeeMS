@@ -11,6 +11,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { untilDestroyed } from '../../../_services/until-destroy.service';
 import { HelperFunctionsService } from '../../../_helpers/helperFunctions.service';
 import { ToastrService } from 'ngx-toastr';
+import {
+  AddEmployeeDTO,
+  AddEmployeeFileDTO,
+} from '../../../DTOs/AddEmployeeDTO';
 
 @Component({
   selector: 'app-employee-card',
@@ -26,6 +30,7 @@ export class EmployeeCardComponent implements OnInit {
   employeeForm!: FormGroup;
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+  updateEmployee!: AddEmployeeDTO;
 
   constructor(
     private _employeeService: EmployeeService,
@@ -119,36 +124,40 @@ export class EmployeeCardComponent implements OnInit {
   saveChanges() {
     if (this.employeeForm.valid) {
       const formData = this.employeeForm.value;
-
-      // If no new file is selected, keep the old image path
-      // if (!this.selectedFile) {
-      //   formData.picture = this.getEmployeeDTO?.employeeFiles?.[0]?.filePath || ''; // Set to an empty string or retain the existing path
-      // }
-
       // Update the employeeDTO with form values
-      this.getEmployeeDTO = {
+      this.updateEmployee = {
         ...formData,
         id: this.employeeId,
-        employeeFiles: this.getEmployeeDTO?.employeeFiles,
       };
+
       // Handle file upload if a new image is selected
       if (this.selectedFile) {
-        // Logic for file upload (you can call your API here)
+        this.updateEmployee.employeeFiles = [
+          {
+            id: this.getEmployeeDTO?.employeeFiles?.[0]?.id || 0,
+            file: this.selectedFile,
+            employeeFileTypeId: 1,
+          },
+        ];
       }
 
-      this._employeeService
-        .postForm(this.getEmployeeDTO)
-        .pipe(this.destroy$())
-        .subscribe({
-          next: () => {
-            this.toastr.success('Employee Record Updated');
-          },
-          error: (err) => {
-            console.error('Error saving employee data:', err);
-          },
-        });
-
+      this.saveEmployee(this.updateEmployee);
       this.isEditMode = false; // Exit edit mode after saving
     }
+  }
+
+  saveEmployee(employee: AddEmployeeDTO) {
+    this._employeeService
+      .saveEmployee(employee)
+      .pipe(this.destroy$())
+      .subscribe({
+        next: () => {
+          this.toastr.success('Employee Record Updated');
+          this.fetchEmployeeData(this.updateEmployee.id);
+        },
+        error: (err) => {
+          console.error('Error saving employee data:', err);
+        },
+      });
   }
 }

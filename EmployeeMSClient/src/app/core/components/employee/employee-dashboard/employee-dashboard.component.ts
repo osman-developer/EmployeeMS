@@ -43,7 +43,7 @@ export class EmployeeDashboardComponent implements OnInit {
     // Handle employee added event when the dialog is closed
     dialogRef.componentInstance.employeeAdded.subscribe(
       (employee: AddEmployeeDTO) => {
-        this.addEmployee(employee);
+        this.saveEmployee(employee);
       }
     );
 
@@ -53,9 +53,9 @@ export class EmployeeDashboardComponent implements OnInit {
   }
 
   // Handle the event when an employee is added
-  addEmployee(employee: AddEmployeeDTO) {
+  saveEmployee(employee: AddEmployeeDTO) {
     this._employeeService
-      .addEmployee(employee)
+      .saveEmployee(employee)
       .pipe(this.destroy$())
       .subscribe({
         next: () => {

@@ -11,6 +11,7 @@ namespace EmployeeMS.Domain.DTOs.EmployeeFile
     public class AddEmployeeFileDTO
     {
        
+        public int? Id { get; set; }
         public int? EmployeeFileTypeId { get; set; }
         public IFormFile? File { get; set; }
     }

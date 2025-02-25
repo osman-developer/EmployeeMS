@@ -13,6 +13,7 @@ export interface GetEmployeeDTO {
 }
 
 export interface GetEmployeeFileDTO {
+  id: number;
   filePath: any;
   employeeId: number;
   employeeFileTypeId: number;

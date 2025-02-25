@@ -12,6 +12,7 @@ export interface AddEmployeeDTO {
 }
 
 export interface AddEmployeeFileDTO {
+  id?: number | null;
   file: File;
   employeeFileTypeId: number;
 }

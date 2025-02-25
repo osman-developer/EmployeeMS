@@ -35,7 +35,11 @@ namespace EmployeeMS.Infrastructure.Repository
             _context.Set<T>().AddRange(entities);
             return _context.SaveChanges() > 0;
         }
-
+        public bool UpdateRange(List<T> entities)
+        {
+            _context.Set<T>().UpdateRange(entities);
+            return _context.SaveChanges() > 0;
+        }
         public async Task<T> Get(int id)
         {
             return await _context.Set<T>().FindAsync(id);

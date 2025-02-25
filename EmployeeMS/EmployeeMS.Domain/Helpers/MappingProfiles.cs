@@ -22,7 +22,8 @@ namespace EmployeeMS.Domain.Helpers
 
             //create map between employeefile and EmployeefileDto with ignoring the other fields
             CreateMap<EmployeeFile, GetEmployeeFileDTO>()
-             .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src => src.FilePath))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src => src.FilePath))
                 .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.EmployeeId))
                 .ForMember(dest => dest.EmployeeFileTypeId, opt => opt.MapFrom(src => src.EmployeeFileTypeId))
                 .ForAllOtherMembers(opt => opt.Ignore());

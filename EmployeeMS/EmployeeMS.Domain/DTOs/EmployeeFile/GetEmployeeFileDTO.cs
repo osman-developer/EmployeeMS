@@ -9,6 +9,7 @@ namespace EmployeeMS.Domain.DTOs.EmployeeFile
 {
     public class GetEmployeeFileDTO
     {
+        public int? Id { get; set; }
         public string FilePath { get; set; }
         public int EmployeeId { get; set; }
         public int EmployeeFileTypeId { get; set; }

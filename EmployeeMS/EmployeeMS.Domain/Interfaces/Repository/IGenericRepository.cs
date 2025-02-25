@@ -19,6 +19,7 @@ namespace EmployeeMS.Domain.Interfaces.Repository
         bool Add(T entity);
         bool Delete(int id);
         bool AddRange(List<T> entities);
+        bool UpdateRange(List<T> entities);
         IQueryable<T> GetQueryable();
     }
 }

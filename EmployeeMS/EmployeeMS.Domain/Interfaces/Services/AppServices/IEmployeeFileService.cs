@@ -11,6 +11,7 @@ namespace EmployeeMS.Domain.Interfaces.Services.AppServices
 {
     public interface IEmployeeFileService
     {
+        bool Delete(int employeeFileId);
         bool Save(ICollection<AddEmployeeFileDTO> EmployeeFiles, int employeeId);
     }
 }

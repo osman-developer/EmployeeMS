@@ -1,3 +1,3 @@
 export enum appConstants {
-  pageSize = 5,
+  pageSize = 6,
 }

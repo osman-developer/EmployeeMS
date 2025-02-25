@@ -13,7 +13,7 @@ export class EmployeeService extends BaseApiService {
     super(`${envConstants.endpoint}/${envConstants.employee}`, http);
   }
 
-  addEmployee(employee: AddEmployeeDTO): Observable<AddEmployeeDTO> {
+  saveEmployee(employee: AddEmployeeDTO): Observable<AddEmployeeDTO> {
     return this.postForm(employee, 'employeeFiles'); // Pass employeeFiles as fileKey
   }
 }
