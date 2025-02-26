@@ -9,6 +9,7 @@ using EmployeeMS.Domain.DTOs.Employee;
 using EmployeeMS.Domain.Entities;
 using EmployeeMS.Domain.DTOs.EmployeeFile;
 using System.Xml.Linq;
+using EmployeeMS.Domain.DTOs.Department;
 namespace EmployeeMS.Domain.Helpers
 {
     public class MappingProfiles : Profile
@@ -29,7 +30,11 @@ namespace EmployeeMS.Domain.Helpers
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<AddEmployeeDTO, Employee>().ForMember(emp => emp.EmployeeFiles, opt => opt.Ignore());
-           
+            
+            CreateMap<Department, GetDepartmentDTO>();
+            CreateMap<AddDepartmentDTO, Department>().ForMember(dep => dep.Employees, opt => opt.Ignore())
+                .ForMember(dep => dep.Employees, opt => opt.Ignore());
+
         }
     }
 }

@@ -66,6 +66,7 @@ export class EmployeeCardComponent implements OnInit {
       startDate: new FormControl(null, Validators.required),
       dateOfBirth: new FormControl(null, Validators.required),
       salary: new FormControl(null, [Validators.required, Validators.min(0)]),
+      departmentId: new FormControl(null, [Validators.required]),
       endDate: new FormControl(''),
     });
   }
@@ -115,6 +116,7 @@ export class EmployeeCardComponent implements OnInit {
       endDate: this.getEmployeeDTO.endDate ? this.getEmployeeDTO.endDate : '',
       dateOfBirth: this.getEmployeeDTO.dateOfBirth,
       salary: this.getEmployeeDTO.salary,
+      departmentId: this.getEmployeeDTO.departmentId,
     });
   }
 

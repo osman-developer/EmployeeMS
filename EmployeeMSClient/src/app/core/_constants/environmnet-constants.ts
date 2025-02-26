@@ -3,4 +3,5 @@ export enum envConstants {
   endpointForPhotos = 'http://localhost:5000',
   employee = 'employee',
   employeeFile = 'employeeFile',
+  department = 'department',
 }

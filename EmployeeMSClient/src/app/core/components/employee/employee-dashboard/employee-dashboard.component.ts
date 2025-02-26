@@ -24,6 +24,7 @@ export class EmployeeDashboardComponent implements OnInit {
   pageSize: number = appConstants.pageSize;
   totalCount!: number;
   paginationResponse!: PagingResponse;
+  searchString: string = '';
 
   constructor(
     private _employeeService: EmployeeService,
@@ -72,7 +73,7 @@ export class EmployeeDashboardComponent implements OnInit {
     var request: PagingRequest = {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      searchString: '',
+      searchString: this.searchString,
     };
     this._employeeService.getAllPaginated(request).subscribe({
       next: (res) => {
@@ -95,13 +96,10 @@ export class EmployeeDashboardComponent implements OnInit {
     }
   }
   onSearch() {
-    // this.shopParams.search = this.searchTerm?.nativeElement.value;
-    // this.shopParams.pageNumber = 1;
-    // this.getProducts();
+    this.getEmployeesPaginated();
   }
   onReset() {
-    // this.searchTerm = undefined;
-    // this.shopParams = new ShopParams();
-    // this.getProducts();
+    this.searchString = '';
+    this.getEmployeesPaginated();
   }
 }

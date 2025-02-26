@@ -11,7 +11,12 @@ export const routes: Route[] = [
         (m) => m.EmployeeModule
       ),
   },
+  {
+    path: 'departments',
+    loadChildren: () =>
+      import('./core/components/department/department.module').then(
+        (m) => m.DepartmentModule
+      ),
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // Catch-all for unmatched routes
 ];
-
-

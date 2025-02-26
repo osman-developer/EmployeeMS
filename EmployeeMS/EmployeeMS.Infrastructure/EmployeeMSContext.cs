@@ -15,6 +15,7 @@ namespace EmployeeMS.Infrastructure
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeFile> EmployeeFiles { get; set; }
+        public DbSet<Department> Departments{ get; set; }
         public DbSet<EmployeeFileType> EmployeeFileTypes { get; set; }
 
         public static void DataSeed(ModelBuilder modelBuilder)

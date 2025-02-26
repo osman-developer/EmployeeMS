@@ -8,6 +8,7 @@ export interface GetEmployeeDTO {
   salary: number;
   startDate: string;
   endDate: string | '';
+  departmentId: number;
   employeeFiles?: GetEmployeeFileDTO[];
   profilePicture?: File | null;
 }

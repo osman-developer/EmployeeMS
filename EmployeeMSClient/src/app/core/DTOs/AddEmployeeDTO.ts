@@ -8,6 +8,7 @@ export interface AddEmployeeDTO {
   salary: number;
   startDate: string;
   endDate: string;
+  departmentId: number;
   employeeFiles: AddEmployeeFileDTO[];
 }
 
