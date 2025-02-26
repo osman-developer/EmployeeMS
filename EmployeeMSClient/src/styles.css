@@ -4,3 +4,12 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Ensure backdrop overlay works correctly */
+.modal-backdrop {
+  z-index: 1040 !important; /* Higher than modal */
+}
+
+/* Ensure the modal content is always on top */
+.modal-content {
+  z-index: 1050 !important; /* Higher than the backdrop */
+}

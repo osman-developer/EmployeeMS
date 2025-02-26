@@ -7,8 +7,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { PagerComponent } from './pager/pager.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { PagingHeaderComponent } from './paging-header/paging-header.component';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 @NgModule({
-  declarations: [NavBarComponent, PagerComponent, PagingHeaderComponent],
+  declarations: [
+    NavBarComponent,
+    ConfirmationDialogComponent,
+    PagerComponent,
+    PagingHeaderComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,6 +31,7 @@ import { PagingHeaderComponent } from './paging-header/paging-header.component';
     PaginationModule,
     CommonModule,
     FormsModule,
+    ConfirmationDialogComponent,
   ],
 })
 export class SharedModule {}

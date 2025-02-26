@@ -15,6 +15,8 @@ import {
   AddEmployeeDTO,
   AddEmployeeFileDTO,
 } from '../../../DTOs/AddEmployeeDTO';
+import { EmployeeFileService } from '../../../_services/employeeFileAPI.service';
+import { ConfirmationDialogService } from '../../../_helpers/confirmation-dialog.service';
 
 @Component({
   selector: 'app-employee-card',
@@ -34,10 +36,12 @@ export class EmployeeCardComponent implements OnInit {
 
   constructor(
     private _employeeService: EmployeeService,
+    private _employeeFileService: EmployeeFileService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private helperFunctionsService: HelperFunctionsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private confirmationDialogService: ConfirmationDialogService
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +51,12 @@ export class EmployeeCardComponent implements OnInit {
       this.fetchEmployeeData(this.employeeId);
     }
   }
-
+  get profilePicture() {
+    // Find the profile picture file where employeeFileTypeId is 1
+    return this.getEmployeeDTO.employeeFiles?.find(
+      (file) => file.employeeFileTypeId === 1
+    );
+  }
   initForm(): void {
     this.employeeForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -153,7 +162,42 @@ export class EmployeeCardComponent implements OnInit {
       .subscribe({
         next: () => {
           this.toastr.success('Employee Record Updated');
+          this.previewUrl = null; // Clear preview image if any
           this.fetchEmployeeData(this.updateEmployee.id);
+        },
+        error: (err) => {
+          console.error('Error saving employee data:', err);
+        },
+      });
+  }
+
+  removePicture(employeeFileId?: number) {
+    // Remove the employee file object with employeeFileTypeId = 1
+    this.confirmationDialogService
+      .openDialog(
+        'Remove Profile Picture',
+        'Are you sure you want to remove the profile picture? This action cannot be undone.'
+      )
+      .then((confirmed) => {
+        if (confirmed) {
+          this.getEmployeeDTO.employeeFiles =
+            this.getEmployeeDTO?.employeeFiles?.filter(
+              (file) => file.employeeFileTypeId !== 1
+            );
+          this.previewUrl = null; // Clear preview image if any
+          this.deletePicture(employeeFileId);
+        }
+      });
+  }
+
+  //handles the APi call to delete image from db and disk
+  deletePicture(employeeFileId?: number) {
+    this._employeeFileService
+      .deleteRecord(employeeFileId)
+      .pipe(this.destroy$())
+      .subscribe({
+        next: () => {
+          this.toastr.success('Employee Picture Deleted');
         },
         error: (err) => {
           console.error('Error saving employee data:', err);

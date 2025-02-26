@@ -1,0 +1,80 @@
+/* Profile image styling */
+.profile-img {
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  position: relative; /* Required for positioning the remove button above */
+  transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Remove button styling */
+.remove-btn {
+  position: absolute;
+  top: 10px;  /* Positioning above the image */
+  right: 10px;  /* Positioning it to the top-right corner */
+  background-color: rgba(255, 0, 0, 0.7);
+  border-radius: 50%;
+  padding: 12px;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Ensure it appears above the image */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: rgba(255, 0, 0, 1);  /* Red color on hover */
+  transform: scale(1.1); /* Slight zoom effect when hovering */
+}
+
+/* Tooltip Styling */
+.remove-btn[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: -35px;
+  left: -5px;
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+/* Responsive Styling for Remove Button */
+@media screen and (max-width: 576px) {
+  .remove-btn {
+    top: 10px;
+    right: 10px;
+    font-size: 1.25rem;
+    padding: 8px;
+  }
+}
+
+/* Button for uploading new image */
+label[for="picture"] {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+label[for="picture"]:hover {
+  background-color: #0056b3;
+}
+
+/* Preview image styling */
+.mt-3 img {
+  border-radius: 5px;
+  max-width: 200px;
+}

@@ -1,0 +1,23 @@
+/* Style adjustments for the modal */
+.modal-content {
+  border-radius: 8px;
+}
+
+.modal-header {
+  background-color: #f1f1f1;
+}
+
+.modal-footer {
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}

@@ -21,25 +21,12 @@ namespace EmployeeMS.Service.Services.AppServices
         }
         public bool Delete(int id)
         {
-            //var productImageResult = _repo.GetQueryable().Where(b => b.ProductImageId == id);
-            //var productImageDB = productImageResult.Select(p => new ProductImage()
-            //{
-            //    ProductImageId = p.ProductImageId,
-            //    Path = p.Path,
-            //    ProductId = p.ProductId,
-
-            //}).FirstOrDefault();
-
-            //if (productImageDB != null)
-            //{
-            //    if (File.Exists(productImageDB.Path))
-            //    {
-            //        // If file found, delete it    
-            //        File.Delete(productImageDB.Path);
-            //    }
-            //}
-            //return _repo.Delete(id);
-            return false;
+            var employeeFileResult = _employeeFileRepo.GetQueryable().Where(b => b.Id == id).ToList();
+            // Delete existing files from disk
+            DeleteExistingFiles(employeeFileResult);
+            
+            return _employeeFileRepo.Delete(id);
+            
         }
         public bool Save(ICollection<AddEmployeeFileDTO> EmployeeFiles, int employeeId)
         {
