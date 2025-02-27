@@ -3,7 +3,7 @@ import { EmployeeService } from '../../../_services/employeeAPI.service';
 import {
   GetEmployeeDTO,
   GetEmployeeFileDTO,
-} from '../../../DTOs/GetEmployeeDTO';
+} from '../../../DTOs/employee/GetEmployeeDTO';
 import { ActivatedRoute } from '@angular/router';
 import { envConstants } from '../../../_constants/environmnet-constants';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import {
   AddEmployeeDTO,
   AddEmployeeFileDTO,
-} from '../../../DTOs/AddEmployeeDTO';
+} from '../../../DTOs/employee/AddEmployeeDTO';
 import { EmployeeFileService } from '../../../_services/employeeFileAPI.service';
 import { ConfirmationDialogService } from '../../../_helpers/confirmation-dialog.service';
 

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import {
   AddEmployeeDTO,
   AddEmployeeFileDTO,
-} from '../../../DTOs/AddEmployeeDTO';
+} from '../../../DTOs/employee/AddEmployeeDTO';
 
 @Component({
   selector: 'app-add-employee',

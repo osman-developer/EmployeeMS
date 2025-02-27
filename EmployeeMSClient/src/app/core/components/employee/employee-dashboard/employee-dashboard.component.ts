@@ -5,10 +5,10 @@ import { PagingResponse } from '../../../models/pagination-models/paging-respons
 import { appConstants } from '../../../_constants/app-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
-import { GetEmployeeDTO } from '../../../DTOs/GetEmployeeDTO';
+import { GetEmployeeDTO } from '../../../DTOs/employee/GetEmployeeDTO';
 import { untilDestroyed } from '../../../_services/until-destroy.service';
 import { ToastrService } from 'ngx-toastr';
-import { AddEmployeeDTO } from '../../../DTOs/AddEmployeeDTO';
+import { AddEmployeeDTO } from '../../../DTOs/employee/AddEmployeeDTO';
 @Component({
   selector: 'app-employee-dashboard',
   standalone: false,
@@ -17,7 +17,6 @@ import { AddEmployeeDTO } from '../../../DTOs/AddEmployeeDTO';
 })
 export class EmployeeDashboardComponent implements OnInit {
   private destroy$ = untilDestroyed();
-  employees: GetEmployeeDTO[] = [];
   showModal = false;
   //for pagination
   pageIndex: number = 1;
@@ -75,18 +74,17 @@ export class EmployeeDashboardComponent implements OnInit {
       pageSize: this.pageSize,
       searchString: this.searchString,
     };
-    this._employeeService.getAllPaginated(request).subscribe({
-      next: (res) => {
-        this.paginationResponse = res;
-        this.employees = res.items;
-        (this.paginationResponse.currentPage = res.currentPage),
-          (this.paginationResponse.pageSize = res.pageSize),
-          (this.totalCount = res.totalCount);
-      },
-      error: (err) => {
-        console.error('Error fetching employees:', err);
-      },
-    });
+    this._employeeService
+      .getAllPaginated(request)
+      .pipe(this.destroy$())
+      .subscribe({
+        next: (res) => {
+          this.paginationResponse = res;
+        },
+        error: (err) => {
+          console.error('Error fetching employees:', err);
+        },
+      });
   }
   onPageChanged(event: any) {
     if (this.paginationResponse.currentPage !== event) {

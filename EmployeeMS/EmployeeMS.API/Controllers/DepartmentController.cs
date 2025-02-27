@@ -20,11 +20,39 @@ namespace EmployeeMS.API.Controllers
             _departmentService = departmentService;
         }
 
+        [HttpPost("save")]
+        public ActionResult<bool> SaveDepartment([FromBody] AddDepartmentDTO department)
+        {
+            if (department == null)
+            {
+                return BadRequest();
+            }
+            return Ok(_departmentService.Save(department));
+        }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<List<GetDepartmentDTO>>> GetDepartments()
+        {
+            return Ok(await _departmentService.GetAll());
+        }
+
         [HttpPost("all-paginated")]
         public async Task<ActionResult<PagingResult<GetDepartmentDTO>>> GetAllPagedAsync([FromBody] PagingParams<Department> paginParams)
         {
             var result = await _departmentService.GetAllPagedAsync(paginParams);
             return Ok(result);
+        }
+        
+        [HttpPost("by-id")]
+        public async Task<ActionResult<GetDepartmentDTO>> GetDepartmentById([FromBody] int departmentId)
+        {
+            return Ok(await _departmentService.Get(departmentId));
+        }
+
+        [HttpPost("delete")]
+        public ActionResult<bool> DeleteDepartment([FromBody] int departmentId)
+        {
+            return Ok(_departmentService.Delete(departmentId));
         }
     }
 }

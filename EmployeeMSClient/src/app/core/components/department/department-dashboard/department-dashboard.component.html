@@ -1,1 +1,55 @@
-<p>department-dashboard works!</p>
+<div class="container-fluid mt-5 px-3">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Button to open the Add Employee modal -->
+    <button (click)="openAddDepartmentModal()" class="btn btn-primary">
+      Add Department
+    </button>
+
+    <h2 class="mb-4 flex-grow-1 text-center">Departments</h2>
+  </div>
+
+
+  <div *ngIf="paginationResponse">
+    <section class="col-9">
+      <div class="d-flex justify-content-between align-items-center pb-2">
+        <app-paging-header [pageNumber]="paginationResponse.currentPage" [pageSize]="paginationResponse.pageSize"
+          [totalCount]="paginationResponse.totalCount">
+        </app-paging-header>
+
+        <div class="form-inline mt-2">
+          <input class="form-control mr-2" (keyup)="onSearch()" [(ngModel)]="searchString" style="width:300px;"
+            placeholder="Search" type="text" />
+          <button class="btn btn-outline-primary my-2" (click)="onSearch()">Search</button>
+          <button class="btn btn-outline-success ml-2 my-2" (click)="onReset()">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Header Row using Bootstrap Grid -->
+    <div class="row bg-light mb-3 p-3 rounded">
+      <div class="col-3 font-weight-bold text-uppercase">Department</div>
+      <div class="col-3 font-weight-bold text-uppercase">Location</div>
+      <div class="col-3 font-weight-bold text-uppercase">Employees</div>
+    </div>
+
+    <!-- Department List -->
+    <div *ngFor="let department of paginationResponse.items" class="row mb-4 list-item p-3 rounded shadow-sm bg-white">
+      <div class="col-3">{{ department.name }}</div>
+      <div class="col-3 text-muted">{{ department.location }}</div>
+      <div class="col-3">
+        <span class="badge bg-info">{{ department.employeesNumber }} Employees</span>
+      </div>
+      <div class="col-3 d-flex flex-column align-items-end">
+        <!-- View Details button -->
+        <button class="btn btn-primary btn-sm">View Details</button>
+      </div>
+    </div>
+
+    <!-- Pager -->
+    <div class="d-flex justify-content-center" *ngIf="paginationResponse.totalCount > 0">
+      <app-pager [pageSize]="paginationResponse.pageSize" [totalCount]="paginationResponse.totalCount"
+        (pageChanged)="onPageChanged($event)">
+      </app-pager>
+    </div>
+  </div>
+</div>

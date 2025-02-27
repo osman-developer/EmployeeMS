@@ -16,7 +16,7 @@
         </app-paging-header>
 
         <div class="form-inline mt-2">
-          <input class="form-control mr-2" (keyup)="onSearch()" [(ngModel)]="searchString" style="width:300px;" 
+          <input class="form-control mr-2" (keyup)="onSearch()" [(ngModel)]="searchString" style="width:300px;"
             placeholder="Search" type="text" />
           <button class="btn btn-outline-primary my-2" (click)="onSearch()">Search</button>
           <button class="btn btn-outline-success ml-2 my-2" (click)="onReset()">Reset</button>
@@ -26,8 +26,8 @@
 
     <!-- Employees cards -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
-      <div class="col mb-4" *ngFor="let employee of employees">
-        <div class="card shadow-sm border-light rounded">
+      <div class="col mb-4" *ngFor="let employee of paginationResponse?.items">
+        <div class="card shadow-sm border-light rounded employee-card">
           <div class="card-body">
             <h5 class="card-title text-truncate" style="max-width: 200px;">
               {{ employee.name }}
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Pager -->
-    <div class="d-flex justify-content-center" *ngIf="totalCount > 0">
+    <div class="d-flex justify-content-center" *ngIf="paginationResponse.totalCount > 0">
       <app-pager [pageSize]="paginationResponse.pageSize" [totalCount]="paginationResponse.totalCount"
         (pageChanged)="onPageChanged($event)">
       </app-pager>

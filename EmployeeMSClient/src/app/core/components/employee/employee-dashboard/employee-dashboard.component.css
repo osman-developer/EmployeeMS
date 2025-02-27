@@ -1,7 +1,9 @@
+/* Existing .dashboard styling */
 .dashboard {
   padding: 20px;
 }
 
+/* Button styling */
 button {
   background-color: #4caf50;
   color: white;
@@ -16,3 +18,61 @@ button:hover {
   background-color: #45a049;
 }
 
+/* Card Styling for Employee */
+.employee-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 20px;
+  height: 100%;
+}
+
+/* Hover effect for employee cards (lifting effect and shadow) */
+.employee-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Title Styling */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Card Text Styling */
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Button Styling for Cards */
+button.btn {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+/* Responsive adjustments for card layout */
+@media (max-width: 576px) {
+  .col-12 {
+    width: 100%;
+  }
+}
+
+@media (min-width: 576px) {
+  .col-md-6 {
+    width: 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-lg-4 {
+    width: 33.33%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-xl-3 {
+    width: 25%;
+  }
+}

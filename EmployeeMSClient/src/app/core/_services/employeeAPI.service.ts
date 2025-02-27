@@ -3,7 +3,7 @@ import { BaseApiService } from './baseAPI.service';
 import { HttpClient } from '@angular/common/http';
 import { envConstants } from '../_constants/environmnet-constants';
 import { Observable } from 'rxjs';
-import { AddEmployeeDTO } from '../DTOs/AddEmployeeDTO';
+import { AddEmployeeDTO } from '../DTOs/employee/AddEmployeeDTO';
 
 @Injectable({
   providedIn: 'root',
