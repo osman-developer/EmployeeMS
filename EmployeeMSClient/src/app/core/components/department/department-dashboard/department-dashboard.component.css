@@ -6,9 +6,10 @@
 }
 
 /* Optional: Subtle styling for headers */
-.row.bg-light {
+.row.header {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  background-color: #f0f0f0ee;
 }
 
 /* Optional: Adjust button size and padding for mobile */

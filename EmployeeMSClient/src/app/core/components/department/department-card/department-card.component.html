@@ -1,1 +1,56 @@
-<p>department-card works!</p>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-light rounded" *ngIf="getDepartmentDTO">
+        <form [formGroup]="departmentForm" (ngSubmit)="saveChanges()">
+          <div class="card-body">
+
+            <!-- Start of the form fields section -->
+            <div class="row">
+              <!-- Left Column -->
+              <div class="col-md-6">
+                <div class="list-group">
+                  <li class="list-group-item">
+                    <strong class="mr-2">Department:</strong>
+                    <span *ngIf="!isEditMode">{{ getDepartmentDTO.name }}</span>
+                    <input *ngIf="isEditMode" formControlName="name" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Location:</strong>
+                    <span *ngIf="!isEditMode">{{ getDepartmentDTO.location }}</span>
+                    <input *ngIf="isEditMode" formControlName="location" class="form-control" />
+                  </li>
+
+                </div>
+              </div>
+
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <div class="list-group">
+                  <li class="list-group-item">
+                    <strong class="mr-2">Number of Employees:</strong>
+                    <span *ngIf="!isEditMode">{{ getDepartmentDTO.employeesNumber }}</span>
+                    <input *ngIf="isEditMode" formControlName="employeesNumber" type="text" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Manager:</strong>
+                    <span *ngIf="!isEditMode">{{ getDepartmentDTO.managerId }}</span>
+                    <input *ngIf="isEditMode" formControlName="managerId" type="number" class="form-control" />
+                  </li>
+                </div>
+              </div>
+            </div>
+            <!-- End of the form fields section -->
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between mt-3">
+              <a *ngIf="!isEditMode" (click)="isEditMode = true" class="btn btn-primary">Edit</a>
+              <button *ngIf="isEditMode" type="submit" class="btn btn-success">Save</button>
+              <a [routerLink]="['/department']" class="btn btn-secondary">Back to Departments List</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,10 +25,6 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
       },
     ]),
   ],
-  exports: [
-    DepartmentDashboardComponent,
-    DepartmentCardComponent,
-    AddDepartmentComponent,
-  ],
+  exports: [AddDepartmentComponent],
 })
 export class DepartmentModule {}

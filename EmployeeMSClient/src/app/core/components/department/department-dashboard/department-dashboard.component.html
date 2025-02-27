@@ -26,7 +26,7 @@
     </section>
 
     <!-- Header Row using Bootstrap Grid -->
-    <div class="row bg-light mb-3 p-3 rounded">
+    <div class="row header mb-3 p-3 rounded">
       <div class="col-3 font-weight-bold text-uppercase">Department</div>
       <div class="col-3 font-weight-bold text-uppercase">Location</div>
       <div class="col-3 font-weight-bold text-uppercase">Employees</div>
@@ -41,7 +41,9 @@
       </div>
       <div class="col-3 d-flex flex-column align-items-end">
         <!-- View Details button -->
-        <button class="btn btn-primary btn-sm">View Details</button>
+        <a [routerLink]="['/department', department.id]">
+          <button class="btn btn-primary btn-sm">View Details</button>
+        </a>
       </div>
     </div>
 

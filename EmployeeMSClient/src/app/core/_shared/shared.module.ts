@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component'; // Correct relative path
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { PagerComponent } from './pager/pager.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
@@ -19,6 +19,7 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
     CommonModule,
     FormsModule,
     RouterModule,
+    ReactiveFormsModule,
     ToastrModule,
     PaginationModule.forRoot(),
   ],
@@ -31,6 +32,7 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
     PaginationModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ConfirmationDialogComponent,
   ],
 })

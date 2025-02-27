@@ -12,7 +12,7 @@ export const routes: Route[] = [
       ),
   },
   {
-    path: 'departments',
+    path: 'department',
     loadChildren: () =>
       import('./core/components/department/department.module').then(
         (m) => m.DepartmentModule

@@ -1,5 +1,5 @@
 export interface AddDepartmentDTO {
-  id?: number | null;
+  id?: number;
   name: string;
   location: string;
   employeesNumber: number;

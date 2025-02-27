@@ -134,26 +134,35 @@ export class EmployeeCardComponent implements OnInit {
 
   saveChanges() {
     if (this.employeeForm.valid) {
-      const formData = this.employeeForm.value;
-      // Update the employeeDTO with form values
-      this.updateEmployee = {
-        ...formData,
-        id: this.employeeId,
-      };
+      this.confirmationDialogService
+        .openDialog(
+          'Update Employee Record',
+          'Are you sure you want to update this record? This action cannot be undone.'
+        )
+        .then((confirmed) => {
+          if (confirmed) {
+            const formData = this.employeeForm.value;
+            // Update the employeeDTO with form values
+            this.updateEmployee = {
+              ...formData,
+              id: this.employeeId,
+            };
 
-      // Handle file upload if a new image is selected
-      if (this.selectedFile) {
-        this.updateEmployee.employeeFiles = [
-          {
-            id: this.getEmployeeDTO?.employeeFiles?.[0]?.id || 0,
-            file: this.selectedFile,
-            employeeFileTypeId: 1,
-          },
-        ];
-      }
+            // Handle file upload if a new image is selected
+            if (this.selectedFile) {
+              this.updateEmployee.employeeFiles = [
+                {
+                  id: this.getEmployeeDTO?.employeeFiles?.[0]?.id || 0,
+                  file: this.selectedFile,
+                  employeeFileTypeId: 1,
+                },
+              ];
+            }
 
-      this.saveEmployee(this.updateEmployee);
-      this.isEditMode = false; // Exit edit mode after saving
+            this.saveEmployee(this.updateEmployee);
+            this.isEditMode = false; // Exit edit mode after saving
+          }
+        });
     }
   }
 
