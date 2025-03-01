@@ -19,12 +19,11 @@ namespace EmployeeMS.Domain.Entities
         public DateOnly DateOfBirth { get; set; }
         [Required]
         public string JobTitle { get; set; }
-        [Required]
-        public decimal Salary { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly? EndDate { get; set; }
+        public DateOnly HireDate { get; set; }
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
         public ICollection<EmployeeFile> EmployeeFiles { get; set; }
+        public ICollection<EmployeeContract> Contracts { get; set; }  
+
     }
 }

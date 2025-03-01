@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AddEmployeeFileDTO } from '../DTOs/employee/AddEmployeeDTO';
 
 @Injectable({ providedIn: 'root' })
 export class BaseApiService {

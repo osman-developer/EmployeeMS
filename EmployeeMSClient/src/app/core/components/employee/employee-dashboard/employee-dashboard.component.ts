@@ -5,7 +5,6 @@ import { PagingResponse } from '../../../models/pagination-models/paging-respons
 import { appConstants } from '../../../_constants/app-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmployeeComponent } from '../add-employee/add-employee.component';
-import { GetEmployeeDTO } from '../../../DTOs/employee/GetEmployeeDTO';
 import { untilDestroyed } from '../../../_services/until-destroy.service';
 import { ToastrService } from 'ngx-toastr';
 import { AddEmployeeDTO } from '../../../DTOs/employee/AddEmployeeDTO';

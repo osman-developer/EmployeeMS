@@ -4,10 +4,8 @@ export interface AddEmployeeDTO {
   email: string;
   phoneNumber: string;
   dateOfBirth: string;
+  hireDate: string;
   jobTitle: string;
-  salary: number;
-  startDate: string;
-  endDate: string;
   departmentId: number;
   employeeFiles: AddEmployeeFileDTO[];
 }

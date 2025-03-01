@@ -2,8 +2,6 @@
 using EmployeeMS.Domain.Entities;
 using EmployeeMS.Domain.Interfaces.Services.AppServices;
 using EmployeeMS.Domain.Pagination;
-using EmployeeMS.Service.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeMS.API.Controllers

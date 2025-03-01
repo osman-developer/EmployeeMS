@@ -36,7 +36,7 @@
             <ul class="list-unstyled">
               <li><strong>Email:</strong> {{ employee.email }}</li>
               <li><strong>Phone:</strong> {{ employee.phoneNumber }}</li>
-              <li><strong>Start Date:</strong> {{ employee.startDate | date: 'yyyy-MM-dd' }}</li>
+              <li><strong>Hire Date:</strong> {{ employee.hireDate | date: 'yyyy-MM-dd' }}</li>
             </ul>
             <a [routerLink]="['/employee', employee.id]" class="btn btn-primary w-100">
               View Profile

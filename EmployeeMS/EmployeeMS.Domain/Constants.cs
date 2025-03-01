@@ -15,5 +15,22 @@ namespace EmployeeMS.Domain
             public const string attachment = "attachment";
 
         }
+        public static class ContractStatus
+        {
+            public const string active = "Active";
+            public const string terminated = "Terminated";
+            public const string on_leave = "On Leave";
+
+        }
+        public static class EmployeeContractType
+        {
+            public const string full_time = "Full-time";
+            public const string part_time = "Part-time";
+            public const string temp = "Temporary ";
+            public const string contract = "Contract";
+            public const string internship = "Internship";
+            public const string freelance = "Freelance / Consultant";
+
+        }
     }
 }

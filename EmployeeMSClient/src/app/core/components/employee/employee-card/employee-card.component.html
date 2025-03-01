@@ -60,6 +60,13 @@
                     <span *ngIf="!isEditMode">{{ getEmployeeDTO.phoneNumber }}</span>
                     <input *ngIf="isEditMode" formControlName="phoneNumber" class="form-control" />
                   </li>
+
+                </div>
+              </div>
+
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <div class="list-group">
                   <li class="list-group-item">
                     <strong class="mr-2">Birth Date:</strong>
                     <span *ngIf="!isEditMode">{{ getEmployeeDTO.dateOfBirth | date: 'yyyy-MM-dd' }}</span>
@@ -72,24 +79,15 @@
                   </li>
                 </div>
               </div>
-
-              <!-- Right Column -->
+            </div>
+            <div class="row">
+              <!-- Left Column -->
               <div class="col-md-6">
                 <div class="list-group">
                   <li class="list-group-item">
-                    <strong class="mr-2">Start Date:</strong>
-                    <span *ngIf="!isEditMode">{{ getEmployeeDTO.startDate | date: 'yyyy-MM-dd' }}</span>
-                    <input *ngIf="isEditMode" formControlName="startDate" type="date" class="form-control" />
-                  </li>
-                  <li class="list-group-item">
-                    <strong class="mr-2">End Date:</strong>
-                    <span *ngIf="!isEditMode">{{ getEmployeeDTO.endDate | date: 'yyyy-MM-dd' }}</span>
-                    <input *ngIf="isEditMode" formControlName="endDate" type="date" class="form-control" />
-                  </li>
-                  <li class="list-group-item">
-                    <strong class="mr-2">Salary:</strong>
-                    <span *ngIf="!isEditMode">{{ getEmployeeDTO.salary }}</span>
-                    <input *ngIf="isEditMode" formControlName="salary" class="form-control" />
+                    <strong class="mr-2">Hire Date:</strong>
+                    <span *ngIf="!isEditMode">{{ getEmployeeDTO.hireDate | date: 'yyyy-MM-dd' }}</span>
+                    <input *ngIf="isEditMode" formControlName="hireDate" type="date" class="form-control" />
                   </li>
                 </div>
               </div>

@@ -17,9 +17,7 @@ namespace EmployeeMS.Domain.DTOs.Employee
         public string PhoneNumber { get; set; }
         public DateOnly DateOfBirth { get; set; }
         public string JobTitle { get; set; }
-        public decimal Salary { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly? EndDate { get; set; }
+        public DateOnly HireDate { get; set; }
         public int DepartmentId { get; set; }
         public ICollection<AddEmployeeFileDTO>? EmployeeFiles { get; set; }
     }

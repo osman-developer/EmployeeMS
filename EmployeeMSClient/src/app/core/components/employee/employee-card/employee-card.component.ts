@@ -11,10 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { untilDestroyed } from '../../../_services/until-destroy.service';
 import { HelperFunctionsService } from '../../../_helpers/helperFunctions.service';
 import { ToastrService } from 'ngx-toastr';
-import {
-  AddEmployeeDTO,
-  AddEmployeeFileDTO,
-} from '../../../DTOs/employee/AddEmployeeDTO';
+import { AddEmployeeDTO } from '../../../DTOs/employee/AddEmployeeDTO';
 import { EmployeeFileService } from '../../../_services/employeeFileAPI.service';
 import { ConfirmationDialogService } from '../../../_helpers/confirmation-dialog.service';
 
@@ -63,11 +60,9 @@ export class EmployeeCardComponent implements OnInit {
       jobTitle: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       phoneNumber: new FormControl('', [Validators.required]),
-      startDate: new FormControl(null, Validators.required),
       dateOfBirth: new FormControl(null, Validators.required),
-      salary: new FormControl(null, [Validators.required, Validators.min(0)]),
+      hireDate: new FormControl(null, Validators.required),
       departmentId: new FormControl(null, [Validators.required]),
-      endDate: new FormControl(''),
     });
   }
   fetchEmployeeData(employeeId: number): void {
@@ -84,14 +79,11 @@ export class EmployeeCardComponent implements OnInit {
   }
 
   formatEmployeeData(): void {
-    this.getEmployeeDTO.startDate = this.helperFunctionsService.formatDate(
-      this.getEmployeeDTO.startDate
-    );
-    this.getEmployeeDTO.endDate = this.helperFunctionsService.formatDate(
-      this.getEmployeeDTO.endDate
-    );
     this.getEmployeeDTO.dateOfBirth = this.helperFunctionsService.formatDate(
       this.getEmployeeDTO.dateOfBirth
+    );
+    this.getEmployeeDTO.hireDate = this.helperFunctionsService.formatDate(
+      this.getEmployeeDTO.hireDate
     );
 
     this.getEmployeeDTO?.employeeFiles?.forEach((item: GetEmployeeFileDTO) => {
@@ -112,10 +104,8 @@ export class EmployeeCardComponent implements OnInit {
       jobTitle: this.getEmployeeDTO.jobTitle,
       email: this.getEmployeeDTO.email,
       phoneNumber: this.getEmployeeDTO.phoneNumber,
-      startDate: this.getEmployeeDTO.startDate,
-      endDate: this.getEmployeeDTO.endDate ? this.getEmployeeDTO.endDate : '',
       dateOfBirth: this.getEmployeeDTO.dateOfBirth,
-      salary: this.getEmployeeDTO.salary,
+      hireDate: this.getEmployeeDTO.hireDate,
       departmentId: this.getEmployeeDTO.departmentId,
     });
   }
