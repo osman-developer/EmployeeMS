@@ -23,6 +23,7 @@ builder.Services.AddScoped<IFilterBuilderService, FilterBuilderService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeFileService, EmployeeFileService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IEmployeeContractService, EmployeeContractService>();
 
 builder.Services.AddCors(options => {
     options.AddPolicy("CorsPolicy",
