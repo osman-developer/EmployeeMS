@@ -1,6 +1,6 @@
-/* Hover effect for department rows */
+/* Hover effect for contract rows */
 .list-item{
-  font-size: 17px;
+font-size: 17px;
 }
 .list-item:hover {
   transform: translateY(-5px); /* Lift effect */

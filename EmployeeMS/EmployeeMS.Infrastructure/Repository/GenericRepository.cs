@@ -65,13 +65,21 @@ namespace EmployeeMS.Infrastructure.Repository
             return _context.Set<T>().AsNoTracking().AsQueryable();
         }
 
-        public async Task<PagingResult<T>> GetAllPagedAsync(PagingParams<T> pagingParams)
+        public async Task<PagingResult<T>> GetAllPagedAsync(PagingParams<T> pagingParams, Expression<Func<T, object>>[]? includes = null)
         {
             // Apply the dynamic filter using the FilterBuilderService
             _filterBuilderService.ApplySearchFilter(pagingParams);
             
             var query = _context.Set<T>().AsQueryable();
 
+            // Apply dynamic includes if any
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
             // Apply the filter if it was set by FilterBuilderService
             if (pagingParams.Filter != null)
             {

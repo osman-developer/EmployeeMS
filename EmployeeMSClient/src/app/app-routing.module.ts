@@ -18,5 +18,12 @@ export const routes: Route[] = [
         (m) => m.DepartmentModule
       ),
   },
+  {
+    path: 'contract',
+    loadChildren: () =>
+      import('./core/components/contract/contract.module').then(
+        (m) => m.ContractModule
+      ),
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // Catch-all for unmatched routes
 ];

@@ -14,7 +14,7 @@ namespace EmployeeMS.Domain.Interfaces.Repository
         Task<T> Get(int id);
         Task<List<T>> GetAll();
         Task<List<T>> GetAll(Expression<Func<T, bool>> predicate);
-        Task<PagingResult<T>> GetAllPagedAsync(PagingParams<T> pagingParams);
+        Task<PagingResult<T>> GetAllPagedAsync(PagingParams<T> pagingParams, Expression<Func<T, object>>[]? includes = null);
         bool Update(T entity);
         bool Add(T entity);
         bool Delete(int id);

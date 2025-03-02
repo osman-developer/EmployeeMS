@@ -6,6 +6,7 @@ using EmployeeMS.Domain.Interfaces.Repository;
 using EmployeeMS.Domain.Interfaces.Services.AppServices;
 using EmployeeMS.Domain.Pagination;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 
 namespace EmployeeMS.Service.Services.AppServices
@@ -21,7 +22,7 @@ namespace EmployeeMS.Service.Services.AppServices
         }
         public bool Delete(int id)
         {
-           return _employeeContractRepo.Delete(id);
+            return _employeeContractRepo.Delete(id);
         }
 
         public async Task<GetEmployeeContractDTO> Get(int id)
@@ -38,7 +39,9 @@ namespace EmployeeMS.Service.Services.AppServices
 
         public async Task<PagingResult<GetEmployeeContractDTO>> GetAllPagedAsync(PagingParams<EmployeeContract> pagingParams)
         {
-            var contractsResult = await _employeeContractRepo.GetAllPagedAsync(pagingParams);
+            var includeExpression = new Expression<Func<EmployeeContract, object>>[] { c => c.Employee, c => c.ContractStatus, c => c.ContractType };
+            var contractsResult = await _employeeContractRepo.GetAllPagedAsync(pagingParams, includes: includeExpression);
+
             var contractsDTOs = _mapper.Map<List<GetEmployeeContractDTO>>(contractsResult.Items);
 
             return new PagingResult<GetEmployeeContractDTO>

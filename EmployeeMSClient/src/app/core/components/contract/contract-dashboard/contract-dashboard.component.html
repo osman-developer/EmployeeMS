@@ -1,0 +1,69 @@
+<div class="container-fluid mt-5 px-3">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Button to open the Add contract modal -->
+    <button (click)="openAddContractModal()" class="btn btn-primary">
+      Add Contract
+    </button>
+
+    <h2 class="mb-4 flex-grow-1 text-center">Employees Contracts</h2>
+  </div>
+
+
+  <div *ngIf="paginationResponse">
+    <section class="col-9">
+      <div class="d-flex justify-content-between align-items-center pb-2">
+        <app-paging-header [pageNumber]="paginationResponse.currentPage" [pageSize]="paginationResponse.pageSize"
+          [totalCount]="paginationResponse.totalCount">
+        </app-paging-header>
+
+        <div class="form-inline mt-2">
+          <input class="form-control mr-2" (keyup)="onSearch()" [(ngModel)]="searchString" style="width:300px;"
+            placeholder="Search" type="text" />
+          <button class="btn btn-outline-primary my-2" (click)="onSearch()">Search</button>
+          <button class="btn btn-outline-success ml-2 my-2" (click)="onReset()">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Header Row using Bootstrap Grid -->
+    <div class="row header mb-3 p-3 rounded">
+      <div class="col-2 font-weight-bold text-uppercase">Employee</div>
+      <div class="col-1 font-weight-bold text-uppercase">Start Date</div>
+      <div class="col-2 font-weight-bold text-uppercase">Contract Type</div>
+      <div class="col-1 font-weight-bold text-uppercase">Salary</div>
+      <div class="col-2 font-weight-bold text-uppercase">Position</div>
+      <div class="col-2 font-weight-bold text-uppercase">Contract Status</div>
+    </div>
+
+    <!-- contract List -->
+    <div *ngFor="let contract of paginationResponse.items" class="row mb-4 list-item p-3 rounded shadow-sm bg-white">
+      <div class="col-2">{{ contract.employee?.name }}</div>
+      <div class="col-1 text-muted">{{ contract.startDate }}</div>
+      <div class="col-2 text-muted">{{ contract.contractType }}</div>
+      <div class="col-1 text-muted">{{ contract.salary | currency }}</div>
+      <div class="col-2 text-muted">{{ contract.position }}</div>
+      <div class="col-2">
+        <span class="badge" [ngClass]="{
+          'bg-success': contract.contractStatus === 'Active', 
+          'bg-danger': contract.contractStatus === 'Terminated', 
+          'bg-warning': contract.contractStatus !== 'Active' && contract.contractStatus !== 'Terminated'
+        }">
+          {{ contract.contractStatus }}
+        </span>
+      </div>
+      <div class="col-2 d-flex flex-column align-items-end">
+        <!-- View Details button -->
+        <a [routerLink]="['/contract', contract.id]">
+          <button class="btn btn-primary btn-sm">View Details</button>
+        </a>
+      </div>
+    </div>
+
+    <!-- Pager -->
+    <div class="d-flex justify-content-center" *ngIf="paginationResponse.totalCount > 0">
+      <app-pager [pageSize]="paginationResponse.pageSize" [totalCount]="paginationResponse.totalCount"
+        (pageChanged)="onPageChanged($event)">
+      </app-pager>
+    </div>
+  </div>
+</div>

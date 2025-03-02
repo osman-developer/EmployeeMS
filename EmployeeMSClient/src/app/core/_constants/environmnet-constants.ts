@@ -4,4 +4,5 @@ export enum envConstants {
   employee = 'employee',
   employeeFile = 'employeeFile',
   department = 'department',
+  contract = 'employeeContract',
 }
