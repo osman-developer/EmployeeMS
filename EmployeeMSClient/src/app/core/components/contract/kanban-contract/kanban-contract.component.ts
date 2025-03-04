@@ -53,6 +53,7 @@ export class KanbanContractComponent {
   prepareUpdatedContract(movedContract: GetContractDTO) {
     const updatedContract: AddContractDTO = {
       id: movedContract.id,
+      name: movedContract.name,
       employeeId: movedContract.employeeId, // Keep only necessary properties
       startDate: movedContract.startDate,
       endDate: movedContract.endDate, // If null, set an empty string

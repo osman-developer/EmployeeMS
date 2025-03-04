@@ -11,6 +11,8 @@ namespace EmployeeMS.Domain.Entities
     {
         public int EmployeeId { get; set; }
         [Required]
+        public string Name{ get; set; }
+        [Required]
         public DateOnly StartDate { get; set; }
         public DateOnly? EndDate { get; set; } // Nullable if it's an indefinite contract
         [Required]

@@ -1,26 +1,24 @@
 <div class="kanban-container">
   <div *ngFor="let status of contractStatus" class="kanban-column" cdkDropList
-    [cdkDropListData]="getContractsByStatus(status)"
-    [cdkDropListConnectedTo]="getConnectedStatuses(status)"
-    (cdkDropListDropped)="onDrop($event)"
-    [id]="status">
+    [cdkDropListData]="getContractsByStatus(status)" [cdkDropListConnectedTo]="getConnectedStatuses(status)"
+    (cdkDropListDropped)="onDrop($event)" [id]="status">
 
     <h3>{{ status | titlecase }}</h3>
 
     <div *ngFor="let contract of getContractsByStatus(status)" class="kanban-card" cdkDrag [cdkDragData]="contract">
       <mat-card class="contract-card">
         <mat-card-header>
-          <mat-card-title>{{ contract.position }}</mat-card-title>
+          <mat-card-title>{{ contract.name }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <p>Employee: {{ contract.employee.name }}</p>
-          <p>Status: {{ contract.contractStatus | titlecase }}</p>
-          <p>Contract Terms: {{ contract.contractTerms }}</p>
-          <p>Contract Position: {{ contract.position }}</p>
+          <p>Position: {{ contract.position }}</p>
+          <p>Start Date: {{ contract.startDate }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>View</button>
-          <button mat-button>Update</button>
+          <a [routerLink]="['/contract', contract.id]">
+            <button class="btn btn-primary btn-sm">View Details</button>
+          </a>
         </mat-card-actions>
       </mat-card>
     </div>

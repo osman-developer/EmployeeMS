@@ -3,6 +3,7 @@ import { GetEmployeeDTO } from '../employee/GetEmployeeDTO';
 export interface GetContractDTO {
   id: number;
   employeeId: number;
+  name: string;
   startDate: string;
   endDate: any;
   contractTypeId: number;

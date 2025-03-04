@@ -13,6 +13,7 @@ namespace EmployeeMS.Domain.DTOs.EmployeeContract
     public class GetEmployeeContractDTO
     {
         public int? Id{ get; set; }
+        public string Name { get; set; }
         public int EmployeeId { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly? EndDate { get; set; } 
