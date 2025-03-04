@@ -8,6 +8,9 @@ import { PagerComponent } from './pager/pager.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { PagingHeaderComponent } from './paging-header/paging-header.component';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [
     NavBarComponent,
@@ -22,6 +25,8 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
     ReactiveFormsModule,
     ToastrModule,
     PaginationModule.forRoot(),
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [DatePipe], // Add DatePipe here
   exports: [
@@ -34,6 +39,8 @@ import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confi
     FormsModule,
     ReactiveFormsModule,
     ConfirmationDialogComponent,
+    MatCardModule,
+    MatButtonModule,
   ],
 })
 export class SharedModule {}

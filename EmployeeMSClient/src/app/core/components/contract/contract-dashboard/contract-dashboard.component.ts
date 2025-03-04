@@ -24,6 +24,7 @@ export class ContractDashboardComponent implements OnInit {
   totalCount!: number;
   paginationResponse!: PagingResponse;
   searchString: string = '';
+  toggle = true;
 
   constructor(
     private _contractService: ContractService,
@@ -33,6 +34,10 @@ export class ContractDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getContractsPaginated();
+  }
+
+  toggleChild() {
+    this.toggle = !this.toggle;
   }
 
   getContractsPaginated() {
@@ -81,12 +86,15 @@ export class ContractDashboardComponent implements OnInit {
 
   // Handle the event when an contract is added
   saveContract(contract: AddContractDTO) {
+    const message = contract.id
+      ? 'Contract Record Updated.'
+      : 'Contract Record Added.';
     this._contractService
       .post(contract)
       .pipe(this.destroy$())
       .subscribe({
         next: () => {
-          this.toastr.success('Contract Record Added.');
+          this.toastr.success(message);
           this.getContractsPaginated();
         },
         error: (err) => {

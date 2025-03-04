@@ -1,0 +1,37 @@
+<div class="container-fluid px-3">
+  <div *ngIf="paginationResponse">
+    <!-- Header Row using Bootstrap Grid -->
+    <div class="row header mb-3 p-3 rounded">
+      <div class="col-2 font-weight-bold text-uppercase">Employee</div>
+      <div class="col-1 font-weight-bold text-uppercase">Start Date</div>
+      <div class="col-2 font-weight-bold text-uppercase">Contract Type</div>
+      <div class="col-1 font-weight-bold text-uppercase">Salary</div>
+      <div class="col-2 font-weight-bold text-uppercase">Position</div>
+      <div class="col-2 font-weight-bold text-uppercase">Contract Status</div>
+    </div>
+
+    <!-- contract List -->
+    <div *ngFor="let contract of paginationResponse.items" class="row mb-4 list-item p-3 rounded shadow-sm bg-white">
+      <div class="col-2">{{ contract.employee?.name }}</div>
+      <div class="col-1 text-muted">{{ contract.startDate }}</div>
+      <div class="col-2 text-muted">{{ contract.contractType }}</div>
+      <div class="col-1 text-muted">{{ contract.salary | currency }}</div>
+      <div class="col-2 text-muted">{{ contract.position }}</div>
+      <div class="col-2">
+        <span class="badge" [ngClass]="{
+          'bg-success': contract.contractStatus === 'Active', 
+          'bg-danger': contract.contractStatus === 'Terminated', 
+          'bg-warning': contract.contractStatus !== 'Active' && contract.contractStatus !== 'Terminated'
+        }">
+          {{ contract.contractStatus }}
+        </span>
+      </div>
+      <div class="col-2 d-flex flex-column align-items-end">
+        <!-- View Details button -->
+        <a [routerLink]="['/contract', contract.id]">
+          <button class="btn btn-primary btn-sm">View Details</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

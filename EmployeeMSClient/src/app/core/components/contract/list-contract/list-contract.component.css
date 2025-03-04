@@ -1,0 +1,30 @@
+/* Hover effect for contract rows */
+.list-item{
+  font-size: 17px;
+  }
+  .list-item:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow for hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Optional: Subtle styling for headers */
+  .row.header {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background-color: #f0f0f0ee;
+  }
+    /* Button styling */
+  button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+  }
+    
+  button:hover {
+      background-color: #45a049;
+  }

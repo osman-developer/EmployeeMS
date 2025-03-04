@@ -1,14 +1,14 @@
-<div class="container-fluid mt-5 px-3">
+<div class="container-fluid mt-5 ">
   <div class="d-flex justify-content-between align-items-center mb-4">
+    <button (click)="toggleChild()">Kanban/List View</button>
+
     <!-- Button to open the Add contract modal -->
-    <button (click)="openAddContractModal()" class="btn btn-primary">
+    <button (click)="openAddContractModal()" class="btn btn-primary ml-2">
       Add Contract
     </button>
 
     <h2 class="mb-4 flex-grow-1 text-center">Employees Contracts</h2>
   </div>
-
-
   <div *ngIf="paginationResponse">
     <section class="col-9">
       <div class="d-flex justify-content-between align-items-center pb-2">
@@ -25,38 +25,17 @@
       </div>
     </section>
 
-    <!-- Header Row using Bootstrap Grid -->
-    <div class="row header mb-3 p-3 rounded">
-      <div class="col-2 font-weight-bold text-uppercase">Employee</div>
-      <div class="col-1 font-weight-bold text-uppercase">Start Date</div>
-      <div class="col-2 font-weight-bold text-uppercase">Contract Type</div>
-      <div class="col-1 font-weight-bold text-uppercase">Salary</div>
-      <div class="col-2 font-weight-bold text-uppercase">Position</div>
-      <div class="col-2 font-weight-bold text-uppercase">Contract Status</div>
-    </div>
 
-    <!-- contract List -->
-    <div *ngFor="let contract of paginationResponse.items" class="row mb-4 list-item p-3 rounded shadow-sm bg-white">
-      <div class="col-2">{{ contract.employee?.name }}</div>
-      <div class="col-1 text-muted">{{ contract.startDate }}</div>
-      <div class="col-2 text-muted">{{ contract.contractType }}</div>
-      <div class="col-1 text-muted">{{ contract.salary | currency }}</div>
-      <div class="col-2 text-muted">{{ contract.position }}</div>
-      <div class="col-2">
-        <span class="badge" [ngClass]="{
-          'bg-success': contract.contractStatus === 'Active', 
-          'bg-danger': contract.contractStatus === 'Terminated', 
-          'bg-warning': contract.contractStatus !== 'Active' && contract.contractStatus !== 'Terminated'
-        }">
-          {{ contract.contractStatus }}
-        </span>
-      </div>
-      <div class="col-2 d-flex flex-column align-items-end">
-        <!-- View Details button -->
-        <a [routerLink]="['/contract', contract.id]">
-          <button class="btn btn-primary btn-sm">View Details</button>
-        </a>
-      </div>
+    <div>
+      <!-- When toggle is true, show Child One, otherwise show Child Two -->
+      <ng-container *ngIf="toggle; else elseTemplate">
+        <app-list-contract [paginationResponse]="paginationResponse"></app-list-contract>
+      </ng-container>
+
+      <ng-template #elseTemplate>
+        <app-kanban-contract [paginationResponse]="paginationResponse"
+          [onStatusChange]="saveContract.bind(this)"></app-kanban-contract>
+      </ng-template>
     </div>
 
     <!-- Pager -->
