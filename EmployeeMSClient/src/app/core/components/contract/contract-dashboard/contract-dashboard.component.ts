@@ -36,7 +36,7 @@ export class ContractDashboardComponent implements OnInit {
     this.getContractsPaginated();
   }
 
-  toggleChild() {
+  toggleView() {
     this.toggle = !this.toggle;
   }
 

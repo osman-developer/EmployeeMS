@@ -9,6 +9,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
+    ContractCardComponent,
     ContractDashboardComponent,
     ListContractComponent,
     KanbanContractComponent,

@@ -1,1 +1,107 @@
-<p>contract-card works!</p>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-light rounded" *ngIf="getContractDTO">
+        <form [formGroup]="contractForm" (ngSubmit)="saveChanges()">
+          <div class="card-body">
+
+            <!-- Generate PDF Button placed at the top -->
+            <div class="d-flex justify-content-end mb-3">
+              <button type="button" (click)="generatePDF()" class="btn btn-primary">
+                <i class="fas fa-file-pdf mr-2"></i> Generate PDF
+              </button>
+            </div>
+
+            <!-- Start of the form fields section -->
+            <div class="row">
+              <!-- Contract Name (Full width) -->
+              <div class="col-12 text-center mb-3">
+                <div class="list-group">
+                  <li class="list-group-item">
+                    <strong class="mr-2">Contract</strong>
+                    <div *ngIf="!isEditMode">{{ getContractDTO.name }}</div>
+                    <input *ngIf="isEditMode" formControlName="name" class="form-control" />
+                  </li>
+                </div>
+              </div>
+            </div>
+
+            <!-- Other Fields Section -->
+            <div class="row">
+              <!-- Left Column -->
+              <div class="col-md-6">
+                <div class="list-group">
+                  <li class="list-group-item">
+                    <strong class="mr-2">Start Date:</strong>
+                    <span *ngIf="!isEditMode">{{ getContractDTO.startDate }}</span>
+                    <input *ngIf="isEditMode" formControlName="startDate" type="date" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Salary:</strong>
+                    <span *ngIf="!isEditMode">{{ getContractDTO.salary | currency }}</span>
+                    <input *ngIf="isEditMode" formControlName="salary" type="number" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Position:</strong>
+                    <span *ngIf="!isEditMode">{{ getContractDTO.position }}</span>
+                    <input *ngIf="isEditMode" formControlName="position" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Contract Terms:</strong>
+                    <span *ngIf="!isEditMode">{{ getContractDTO.contractTerms }}</span>
+                    <textarea *ngIf="isEditMode" formControlName="contractTerms" class="form-control"></textarea>
+                  </li>
+                </div>
+              </div>
+
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <div class="list-group">
+                  <li class="list-group-item">
+                    <strong class="mr-2">Contract Type:</strong>
+                    <span *ngIf="!isEditMode">{{ getContractDTO.contractType }}</span>
+                    <input *ngIf="isEditMode" formControlName="contractType" class="form-control" />
+                  </li>
+
+                  <li class="list-group-item">
+                    <strong class="mr-2">Contract Status:</strong>
+                    <!-- Display contract status with dynamic styling -->
+                    <span *ngIf="!isEditMode" [ngClass]="{
+                            'bg-success': getContractDTO.contractStatus === 'Active', 
+                            'bg-danger': getContractDTO.contractStatus === 'Terminated', 
+                            'bg-warning': getContractDTO.contractStatus !== 'Active' && getContractDTO.contractStatus !== 'Terminated'
+                          }" class="badge">
+                      {{ getContractDTO.contractStatus }}
+                    </span>
+
+                    <!-- Display input field when in edit mode -->
+                    <input *ngIf="isEditMode" formControlName="contractStatus" class="form-control" />
+                  </li>
+
+                  <li class="list-group-item">
+                    <strong class="mr-2">End Date:</strong>
+                    <span *ngIf="!isEditMode">{{ getContractDTO.endDate }}</span>
+                    <input *ngIf="isEditMode" formControlName="endDate" type="date" class="form-control" />
+                  </li>
+                  <li class="list-group-item">
+                    <strong class="mr-2">Signing Date:</strong>
+                    <span *ngIf="!isEditMode">{{ getContractDTO.signingDate }}</span>
+                    <input *ngIf="isEditMode" formControlName="signingDate" type="date" class="form-control" />
+                  </li>
+                </div>
+              </div>
+            </div>
+            <!-- End of the form fields section -->
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between mt-3">
+              <a *ngIf="!isEditMode" (click)="isEditMode = true" class="btn btn-primary">Edit</a>
+              <button *ngIf="isEditMode" type="submit" class="btn btn-success">Save</button>
+              <a [routerLink]="['/contract']" class="btn btn-secondary">Back to Contracts List</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

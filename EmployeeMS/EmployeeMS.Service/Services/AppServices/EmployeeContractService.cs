@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EmployeeMS.Domain.DTOs.Department;
 using EmployeeMS.Domain.DTOs.EmployeeContract;
 using EmployeeMS.Domain.Entities;
 using EmployeeMS.Domain.Interfaces.Repository;
@@ -27,7 +26,10 @@ namespace EmployeeMS.Service.Services.AppServices
 
         public async Task<GetEmployeeContractDTO> Get(int id)
         {
-            var contractResult = _employeeContractRepo.GetQueryable().Where(b => b.Id == id).Include(c => c.Employee).FirstOrDefault();
+            var contractResult = _employeeContractRepo.GetQueryable().Where(b => b.Id == id)
+                .Include(c => c.Employee)
+                .Include(c => c.ContractStatus)
+                .Include(c => c.ContractType).FirstOrDefault();
             return _mapper.Map<GetEmployeeContractDTO>(contractResult);
         }
 
