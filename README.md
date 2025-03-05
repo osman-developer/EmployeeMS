@@ -33,6 +33,9 @@ Additionally, the system allows users to **upload images**, **IDs**, and **attac
 - **Angular Pagination**:
   - The pagination functionality in the angular app is **generic** and can be easily implemented in any component that requires paginated results.
 
+- **Angular Drag Drop**:
+  - The Contracts screen offers two display options: a list view and a Kanban view with drag-and-drop functionality. The drag-and-drop feature allows users to change the status of a contract (e.g., active, terminated, etc.) by simply moving it between columns.
+
 ## Features
 
 - **Clean Layered Architecture**: Ensures separation of concerns, making the system maintainable and easy to scale.
