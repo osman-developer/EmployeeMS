@@ -17,5 +17,6 @@ namespace EmployeeMS.Domain.Interfaces.Services.AppServices
         Task<List<GetEmployeeContractDTO>> GetAll();
         Task<PagingResult<GetEmployeeContractDTO>> GetAllPagedAsync(PagingParams<EmployeeContract> pagingParams);
         Task<GetEmployeeContractDTO> Get(int id);
+        Task<(byte[] pdfBytes, string sanitizedFileName)> GenerateEmployeeContractPdfReportWithTemplateAsync(int contractId);
     }
 }

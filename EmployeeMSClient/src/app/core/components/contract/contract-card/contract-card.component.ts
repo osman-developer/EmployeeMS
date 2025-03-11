@@ -7,6 +7,11 @@ import { ContractService } from '../../../_services/contractAPI.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogService } from '../../../_helpers/confirmation-dialog.service';
+import {
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpResponse,
+} from '@angular/common/http';
 
 @Component({
   selector: 'app-contract-card',
@@ -139,5 +144,38 @@ export class ContractCardComponent {
       });
   }
 
-  generatePDF() {}
+  generatePDF(contractId: number): void {
+    this._contractService
+      .generateReport(contractId) // Assuming contractId is part of the request body
+      .pipe(this.destroy$()) // Ensure proper cleanup when component is destroyed
+      .subscribe({
+        next: (response: HttpResponse<Blob>) => {
+          if (response.body) {
+            const fileName = this.extractFileName(response.headers);
+            console.log('Generated file name:', fileName);
+            this.downloadFile(response.body, fileName);
+          }
+        },
+        error: (err) => {
+          console.error('Error requesting file:', err); // Handle request error
+        },
+      });
+  }
+
+  // Helper to extract file name from response headers
+  private extractFileName(headers: HttpHeaders): string {
+    const contentDisposition = headers.get('Content-Disposition');
+    const matches = /filename="(.+)"/.exec(contentDisposition || '');
+    return matches ? matches[1] : 'downloaded_report.pdf'; // Default file name
+  }
+
+  // Helper to trigger file download
+  private downloadFile(blob: Blob, fileName: string): void {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url); // Clean up the object URL after download
+  }
 }

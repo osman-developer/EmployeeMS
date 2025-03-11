@@ -5,6 +5,7 @@ using EmployeeMS.Domain.Interfaces.Services.HelperServices;
 using EmployeeMS.Infrastructure;
 using EmployeeMS.Infrastructure.Repository;
 using EmployeeMS.Service.Services.AppServices;
+using EmployeeMS.Service.Services.HelperServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -23,16 +24,22 @@ builder.Services.AddScoped<IFilterBuilderService, FilterBuilderService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeFileService, EmployeeFileService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<ITemplateService, TemplateService>();
 builder.Services.AddScoped<IEmployeeContractService, EmployeeContractService>();
 
-builder.Services.AddCors(options => {
-    options.AddPolicy("CorsPolicy",
-        builder => {
-            builder.WithOrigins("http://localhost:4200")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        // Make sure the exact origin is specified     
+        policy.WithOrigins("http://localhost:4200")   // Allow your Angular app
+              .AllowAnyHeader()                    // Allow any headers
+              .AllowAnyMethod()                     // Allow any HTTP method (GET, POST, PUT, DELETE, etc.)
+              .AllowCredentials();                  // Allow credentials (cookies, authentication headers)
+
+    });
 });
+
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -41,6 +48,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
+app.UseCors("CorsPolicy");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -48,11 +57,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseRouting();
-
-app.UseCors("CorsPolicy");
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

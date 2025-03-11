@@ -54,5 +54,30 @@ namespace EmployeeMS.API.Controllers
         {
             return Ok(_employeeContractService.Delete(contractId));
         }
+
+        [HttpPost("generate-report")]
+        public async Task<IActionResult> GenerateEmployeeContractPdfReport([FromBody] int contractId)
+        {
+            try
+            {
+                // Call the service to generate the PDF byte array and get the sanitized contract name
+                var (pdfBytes, sanitizedFileName) = await _employeeContractService.GenerateEmployeeContractPdfReportWithTemplateAsync(contractId);
+
+                // Set the content disposition header to ensure the browser knows it's an attachment
+                Response.Headers["Content-Disposition"] = $"attachment; filename={sanitizedFileName}.pdf";
+
+                // Return the PDF file as a response with the sanitized file name
+                return File(pdfBytes, "application/pdf");
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound($"Template not found: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
     }
 }

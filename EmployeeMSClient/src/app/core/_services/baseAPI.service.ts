@@ -10,7 +10,7 @@ export class BaseApiService {
   ) {}
 
   // Centralized error handler to avoid repeating the same logic
-  private handleError(error: any): Observable<never> {
+  protected handleError(error: any): Observable<never> {
     console.error('Error occurred:', error);
     return throwError(() => new Error(error));
   }
