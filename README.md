@@ -35,6 +35,9 @@ Additionally, the system allows users to **upload images**, **IDs**, and **attac
 
 - **Angular Drag Drop**:
   - The Contracts screen offers two display options: a list view and a Kanban view with drag-and-drop functionality. The drag-and-drop feature allows users to change the status of a contract (e.g., active, terminated, etc.) by simply moving it between columns.
+   
+- **PDF Contract Generation**:
+  - The PDF generation process is handled server-side to ensure consistency across both the web and mobile apps. This approach enhances performance, ensures accuracy, and provides other key benefits.
 
 ## Features
 
