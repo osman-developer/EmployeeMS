@@ -1,26 +1,123 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   AddEmployeeDTO,
   AddEmployeeFileDTO,
 } from '../../../DTOs/employee/AddEmployeeDTO';
+import { appConstants } from '../../../_constants/app-constants';
+import { PagingResponse } from '../../../models/pagination-models/paging-response.model';
+import { DepartmentService } from '../../../_services/departmentAPI.service';
+import { untilDestroyed } from '../../../_services/until-destroy.service';
 
 @Component({
   selector: 'app-add-employee',
   standalone: false,
-  // standalone: true,
-  // imports: [],
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css'],
 })
-export class AddEmployeeComponent {
+export class AddEmployeeComponent implements OnInit {
+  private destroy$ = untilDestroyed();
   employee = {} as AddEmployeeDTO;
   previewUrl: string | ArrayBuffer | null = null; // For previewing the selected image
   selectedImage: File | null = null; // To store the selected image file
-
   @Output() employeeAdded = new EventEmitter<AddEmployeeDTO>();
   @Output() closeModal = new EventEmitter<void>();
+  //pagination fields
+  departments: any = [];
+  paginationResponse!: PagingResponse;
+  pageIndex: number = 1;
+  pageSize: number = appConstants.pageSize;
+  searchString: string = '';
+  totalCount!: number;
+  totalPages: number = 0;
+  isLoading: boolean = false; // Loading indicator for fetching data
+  hasMore: boolean = true; // Whether there are more departments to load
+  previousSelectedValue: any = null; // Track previous value to detect repeated selection of "Load More..."
+  isLoadMoreVisible = true;
+  selectedDepartmentId: any;
 
-  constructor() {}
+  constructor(private _departmentService: DepartmentService) {}
+
+  ngOnInit() {
+    this.loadDepartments();
+  }
+
+  // Load departments with pagination
+  loadDepartments() {
+    this.isLoading = true;
+    const request = {
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      searchString: this.searchString,
+    };
+
+    // Make the API call to get departments
+    this._departmentService
+      .getAllPaginated(request)
+      .pipe(this.destroy$())
+      .subscribe({
+        next: (response: PagingResponse) => {
+          this.processDepartmentResponse(response);
+        },
+        error: (err) => {
+          console.error('Error fetching departments:', err);
+          this.isLoading = false;
+        },
+      });
+  }
+
+  // Append new departments to the list, or replace the list for the first page
+  processDepartmentResponse(response: PagingResponse): void {
+    this.departments =
+      this.pageIndex === 1
+        ? response.items
+        : [...this.departments, ...response.items];
+
+    // Update pagination info
+    this.totalCount = response.totalCount;
+    this.pageIndex = response.currentPage;
+    this.totalPages = response.totalPages;
+
+    // Check if there are more pages to load
+    this.hasMore = this.pageIndex < this.totalPages;
+    this.isLoadMoreVisible = this.hasMore;
+
+    this.isLoading = false;
+  }
+
+  // Called when the dropdown is focused
+  onDropdownFocus() {
+    if (this.departments.length === 0) {
+      this.loadDepartments();
+    }
+  }
+
+  // Called when the department is selected or "Load More..." is clicked
+  onDepartmentChange(event: any) {
+    const selectedValue = event.target.value; // Get the selected value
+
+    // If the user selects "Load More...", trigger loadDepartments
+    if (selectedValue === '-1') {
+      // Only load more if it's not already loading and there are more departments
+      if (!this.isLoading && this.hasMore) {
+        this.pageIndex++; // Increment page index to load the next set of departments
+        this.loadDepartments();
+      }
+
+      // Store the current departmentId for future use
+      const currentDepartmentId = this.employee.departmentId;
+
+      // Use setTimeout to ensure the reset happens after the "Load More" action
+      setTimeout(() => {
+        // Reset selectedDepartmentId to trigger the dropdown reset
+        this.selectedDepartmentId = null; // Reset ngModel to allow UI update
+
+        // Don't affect the employee.departmentId as it needs to stay for DB saving
+        this.employee.departmentId = currentDepartmentId;
+      }, 0);
+    } else {
+      this.employee.departmentId = selectedValue; // Save the selected department for DB
+    }
+  }
 
   // Close the modal
   close() {

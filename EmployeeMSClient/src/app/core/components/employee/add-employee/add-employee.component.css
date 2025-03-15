@@ -110,3 +110,7 @@ button[type="submit"]:hover {
 .close-btn:hover {
   color: #f00; /* Change color on hover if desired */
 }
+#department {
+  max-height: 200px;  /* Limit dropdown height */
+  overflow-y: auto;   /* Enable scrolling when content exceeds max-height */
+}
