@@ -63,4 +63,4 @@ Additionally, the system allows users to **upload images**, **IDs**, and **attac
 
 ## Conclusion
 
-This project is a robust, scalable, and easy-to-extend **Employee Management System** built with a modern .NET framework. With its clean architecture, reusable repository pattern, flexible pagination, and support for file uploads, it provides a comprehensive solution for managing employee data and associated documents.
+This project is a robust, scalable, and easy-to-extend **Employee Management System** built with the modern .NET8.0 and Angular19. With its clean architecture, reusable repository pattern, flexible pagination, and support for file uploads, and PDF downloads. It provides a comprehensive solution for managing employee data and associated documents.
