@@ -14,6 +14,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AddEmployeeDTO } from '../../../DTOs/employee/AddEmployeeDTO';
 import { EmployeeFileService } from '../../../_services/employeeFileAPI.service';
 import { ConfirmationDialogService } from '../../../_helpers/confirmation-dialog.service';
+import { PagingResponse } from '../../../models/pagination-models/paging-response.model';
+import { DepartmentService } from '../../../_services/departmentAPI.service';
+import { appConstants } from '../../../_constants/app-constants';
 
 @Component({
   selector: 'app-employee-card',
@@ -30,6 +33,17 @@ export class EmployeeCardComponent implements OnInit {
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   updateEmployee!: AddEmployeeDTO;
+  departments: any = [];
+  isLoading: boolean = false; // Loading indicator for fetching data
+  hasMore: boolean = true; // Whether there are more departments to load
+  previousSelectedValue: any = null; // Track previous value to detect repeated selection of "Load More..."
+  isLoadMoreVisible = true;
+  selectedDepartmentId: any;
+  totalPages: number = 0;
+  totalCount!: number;
+  pageIndex: number = 1;
+  pageSize: number = appConstants.pageSize;
+  searchString: string = '';
 
   constructor(
     private _employeeService: EmployeeService,
@@ -38,11 +52,13 @@ export class EmployeeCardComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private helperFunctionsService: HelperFunctionsService,
     private toastr: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService
+    private confirmationDialogService: ConfirmationDialogService,
+    private _departmentService: DepartmentService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
+    this.loadDepartments();
     this.employeeId = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     if (this.employeeId) {
       this.fetchEmployeeData(this.employeeId);
@@ -54,6 +70,7 @@ export class EmployeeCardComponent implements OnInit {
       (file) => file.employeeFileTypeId === 1
     );
   }
+
   initForm(): void {
     this.employeeForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -62,13 +79,15 @@ export class EmployeeCardComponent implements OnInit {
       phoneNumber: new FormControl('', [Validators.required]),
       dateOfBirth: new FormControl(null, Validators.required),
       hireDate: new FormControl(null, Validators.required),
-      departmentId: new FormControl(null, [Validators.required]),
+      selectedDepartmentId: new FormControl(null, [Validators.required]),
     });
   }
+
   fetchEmployeeData(employeeId: number): void {
     this._employeeService.getById(employeeId).subscribe({
       next: (res) => {
         this.getEmployeeDTO = res;
+        this.updateEmployee = res;
         this.formatEmployeeData();
         this.updateFormValues();
       },
@@ -76,6 +95,83 @@ export class EmployeeCardComponent implements OnInit {
         console.error('Error fetching employee data:', err);
       },
     });
+  }
+
+  // Append new departments to the list, or replace the list for the first page
+  processDepartmentResponse(response: PagingResponse): void {
+    this.departments =
+      this.pageIndex === 1
+        ? response.items
+        : [...this.departments, ...response.items];
+
+    // Update pagination info
+    this.totalCount = response.totalCount;
+    this.pageIndex = response.currentPage;
+    this.totalPages = response.totalPages;
+
+    // Check if there are more pages to load
+    this.hasMore = this.pageIndex < this.totalPages;
+    this.isLoadMoreVisible = this.hasMore;
+
+    this.isLoading = false;
+  }
+
+  // Load departments with pagination
+  loadDepartments() {
+    this.isLoading = true;
+    const request = {
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      searchString: this.searchString,
+    };
+
+    // Make the API call to get departments
+    this._departmentService
+      .getAllPaginated(request)
+      .pipe(this.destroy$())
+      .subscribe({
+        next: (response: PagingResponse) => {
+          this.processDepartmentResponse(response);
+        },
+        error: (err) => {
+          console.error('Error fetching departments:', err);
+          this.isLoading = false;
+        },
+      });
+  }
+
+  // Called when the dropdown is focused
+  onDropdownFocus() {
+    if (this.departments.length === 0) {
+      this.loadDepartments();
+    }
+  }
+
+  // Called when the department is selected or "Load More..." is clicked
+  onDepartmentChange(event: any) {
+    const selectedValue = event.target.value; // Get the selected value
+    // If the user selects "Load More...", trigger loadDepartments
+    if (selectedValue === '-1') {
+      // Only load more if it's not already loading and there are more departments
+      if (!this.isLoading && this.hasMore) {
+        this.pageIndex++; // Increment page index to load the next set of departments
+        this.loadDepartments();
+      }
+
+      // Store the current departmentId for future use
+      const currentDepartmentId = this.updateEmployee.departmentId;
+
+      // Use setTimeout to ensure the reset happens after the "Load More" action
+      setTimeout(() => {
+        // Reset selectedDepartmentId to trigger the dropdown reset
+        this.selectedDepartmentId = null; // Reset ngModel to allow UI update
+
+        // Don't affect the employee.departmentId as it needs to stay for DB saving
+        this.updateEmployee.departmentId = currentDepartmentId;
+      }, 0);
+    } else {
+      this.updateEmployee.departmentId = selectedValue; // Save the selected department for DB
+    }
   }
 
   formatEmployeeData(): void {
@@ -106,8 +202,9 @@ export class EmployeeCardComponent implements OnInit {
       phoneNumber: this.getEmployeeDTO.phoneNumber,
       dateOfBirth: this.getEmployeeDTO.dateOfBirth,
       hireDate: this.getEmployeeDTO.hireDate,
-      departmentId: this.getEmployeeDTO.departmentId,
+      selectedDepartmentId: this.getEmployeeDTO.departmentId,
     });
+    this.selectedDepartmentId = this.getEmployeeDTO.departmentId;
   }
 
   onFileSelected(event: Event): void {
@@ -136,6 +233,7 @@ export class EmployeeCardComponent implements OnInit {
             this.updateEmployee = {
               ...formData,
               id: this.employeeId,
+              departmentId: this.selectedDepartmentId,
             };
 
             // Handle file upload if a new image is selected

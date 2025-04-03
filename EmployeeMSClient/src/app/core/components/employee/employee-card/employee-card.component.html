@@ -72,10 +72,11 @@
                     <span *ngIf="!isEditMode">{{ getEmployeeDTO.dateOfBirth | date: 'yyyy-MM-dd' }}</span>
                     <input *ngIf="isEditMode" formControlName="dateOfBirth" type="date" class="form-control" />
                   </li>
+
                   <li class="list-group-item">
-                    <strong class="mr-2">Department:</strong>
-                    <span *ngIf="!isEditMode">{{ getEmployeeDTO.departmentId }}</span>
-                    <input *ngIf="isEditMode" formControlName="departmentId" type="number" class="form-control" />
+                    <strong class="mr-2">Hire Date:</strong>
+                    <span *ngIf="!isEditMode">{{ getEmployeeDTO.hireDate | date: 'yyyy-MM-dd' }}</span>
+                    <input *ngIf="isEditMode" formControlName="hireDate" type="date" class="form-control" />
                   </li>
                 </div>
               </div>
@@ -85,9 +86,22 @@
               <div class="col-md-6">
                 <div class="list-group">
                   <li class="list-group-item">
-                    <strong class="mr-2">Hire Date:</strong>
-                    <span *ngIf="!isEditMode">{{ getEmployeeDTO.hireDate | date: 'yyyy-MM-dd' }}</span>
-                    <input *ngIf="isEditMode" formControlName="hireDate" type="date" class="form-control" />
+                    <div class="d-flex align-items-center">
+                      <strong class="mr-3">Department:</strong>
+                      <select id="department" [(ngModel)]="selectedDepartmentId" [ngModelOptions]="{standalone: true}"
+                        name="department" required class="form-control" (focus)="onDropdownFocus()"
+                        (change)="onDepartmentChange($event)">
+
+                        <!-- Departments list -->
+                        <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}
+                        </option>
+                        <!-- Loading spinner when departments are loading -->
+                        <option *ngIf="isLoading" disabled>Loading...</option>
+                        <!-- Load More item, visible only if there are more items and it's not loading -->
+                        <option *ngIf="isLoadMoreVisible && !isLoading" [value]="-1">Load More...</option>
+
+                      </select>
+                    </div>
                   </li>
                 </div>
               </div>
