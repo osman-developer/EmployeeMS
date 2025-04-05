@@ -33,9 +33,19 @@
                     <input *ngIf="isEditMode" formControlName="employeesNumber" type="text" class="form-control" />
                   </li>
                   <li class="list-group-item">
-                    <strong class="mr-2">Manager:</strong>
-                    <span *ngIf="!isEditMode">{{ getDepartmentDTO.managerId }}</span>
-                    <input *ngIf="isEditMode" formControlName="managerId" type="number" class="form-control" />
+                    <div class="d-flex align-items-center">
+                      <strong class="mr-2">Manager:</strong>
+                      <select id="manager" [(ngModel)]="selectedEmployeeId" [ngModelOptions]="{standalone: true}"
+                        name="manager" required class="form-control" (focus)="onDropdownFocus()"
+                        (change)="onEmployeeChange($event)">
+                        <!-- Employees list -->
+                        <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+                        <!-- Loading spinner when employees are loading -->
+                        <option *ngIf="isLoading" disabled>Loading...</option>
+                        <!-- Load More item, visible only if there are more items and it's not loading -->
+                        <option *ngIf="isLoadMoreVisible && !isLoading" [value]="-1">Load More...</option>
+                      </select>
+                    </div>
                   </li>
                 </div>
               </div>

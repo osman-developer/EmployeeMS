@@ -195,6 +195,7 @@ export class EmployeeCardComponent implements OnInit {
   }
 
   updateFormValues(): void {
+    this.selectedDepartmentId = this.getEmployeeDTO.departmentId;
     this.employeeForm.patchValue({
       name: this.getEmployeeDTO.name,
       jobTitle: this.getEmployeeDTO.jobTitle,
@@ -204,7 +205,6 @@ export class EmployeeCardComponent implements OnInit {
       hireDate: this.getEmployeeDTO.hireDate,
       selectedDepartmentId: this.getEmployeeDTO.departmentId,
     });
-    this.selectedDepartmentId = this.getEmployeeDTO.departmentId;
   }
 
   onFileSelected(event: Event): void {

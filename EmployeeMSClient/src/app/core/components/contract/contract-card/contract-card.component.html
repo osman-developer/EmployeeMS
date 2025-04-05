@@ -4,14 +4,19 @@
       <div class="card shadow-lg border-light rounded" *ngIf="getContractDTO">
         <form [formGroup]="contractForm" (ngSubmit)="saveChanges()">
           <div class="card-body">
-
             <!-- Generate PDF Button placed at the top -->
             <div class="d-flex justify-content-end mb-3">
               <button type="button" (click)="generatePDF(getContractDTO.id)" class="btn btn-primary">
                 <i class="fas fa-file-pdf mr-2"></i> Generate PDF
               </button>
             </div>
-
+            <!-- Employee Link reference -->
+            <h5 class="mb-3">
+              <a [routerLink]="['/employee', getContractDTO.employee.id]" class="text-decoration-none text-primary fw-bold clickable-name">
+                {{ getContractDTO.employee.name }}
+              </a>
+            </h5>
+            
             <!-- Start of the form fields section -->
             <div class="row">
               <!-- Contract Name (Full width) -->
