@@ -1,2 +1,84 @@
-<p>add-contract works!</p>
-zz
+<div class="mat-dialog-container">
+  <!-- Close Button -->
+  <button type="button" class="close-btn" (click)="close()">
+    &times; <!-- This represents the "x" symbol -->
+  </button>
+
+  <!-- Contract Form -->
+  <form (ngSubmit)="onSubmit()">
+
+    <!-- First row: Contract Name, Salary, and Employee -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Contract Name</label>
+        <input type="text" id="name" [(ngModel)]="contract.name" name="name" placeholder="Enter contract name"
+          required />
+      </div>
+      <div class="form-group">
+        <label for="salary">Salary</label>
+        <input type="number" id="salary" [(ngModel)]="contract.salary" name="salary" placeholder="Enter salary"
+          required />
+      </div>
+
+      <div class="form-group">
+        <label for="employeeId">Employee</label>
+        <select id="employeeId" [(ngModel)]="contract.employeeId" name="employeeId" required class="form-control"
+          (focus)="onDropdownFocus()" (change)="onEmployeeChange($event)">
+          <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+          <option *ngIf="isLoading" disabled>Loading...</option>
+          <option *ngIf="isLoadMoreVisible && !isLoading" [value]="-1">Load More...</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Second row: Start Date, End Date, and Signing Date -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" [(ngModel)]="contract.startDate" name="startDate" required />
+      </div>
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" [(ngModel)]="contract.endDate" name="endDate" required />
+      </div>
+      <div class="form-group">
+        <label for="signingDate">Signing Date</label>
+        <input type="date" id="signingDate" [(ngModel)]="contract.signingDate" name="signingDate" required />
+      </div>
+    </div>
+
+    <!-- Third row: Contract Status, and Contract Type, Position -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="contractStatusId">Contract Status</label>
+        <!-- Disabled select that will always show 'New' -->
+        <select id="contractStatusId" name="contractStatusId" value="New" class="form-control" disabled>
+          <option value="New">New</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="contractTypeId">Contract Type</label>
+        <select id="contractTypeId" [(ngModel)]="contract.contractTypeId" name="contractTypeId" required
+          class="form-control">
+          <!-- <option *ngFor="let type of contractTypes" [value]="type.id">{{ type.name }}</option> -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="position">Position</label>
+        <input type="text" id="position" [(ngModel)]="contract.position" name="position" placeholder="Enter position"
+          required />
+      </div>
+    </div>
+
+    <!-- Contract Terms row: Full width -->
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="contractTerms">Contract Terms</label>
+        <textarea id="contractTerms" [(ngModel)]="contract.contractTerms" name="contractTerms"
+          placeholder="Enter contract terms" required></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Contract</button>
+  </form>
+</div>

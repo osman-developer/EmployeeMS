@@ -4,7 +4,7 @@ export interface AddContractDTO {
   startDate: string;
   name: string;
   endDate: string;
-  contractTypeId: number;
+  contractTypeId?: number;
   salary: number;
   position: string;
   contractStatusId: number;

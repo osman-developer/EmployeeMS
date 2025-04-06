@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmployeeMS.Domain;
 using EmployeeMS.Domain.DTOs.EmployeeContract;
 using EmployeeMS.Domain.Entities;
 using EmployeeMS.Domain.Interfaces.Repository;
@@ -17,11 +18,13 @@ namespace EmployeeMS.Service.Services.AppServices
     {
         private readonly IGenericRepository<EmployeeContract> _employeeContractRepo;
         private readonly ITemplateService _templateService;
+        private readonly IContractStatusService _contractStatusService;
         private readonly IMapper _mapper;
-        public EmployeeContractService(IGenericRepository<EmployeeContract> employeeContractRepo, ITemplateService templateService, IMapper mapper)
+        public EmployeeContractService(IGenericRepository<EmployeeContract> employeeContractRepo, ITemplateService templateService, IContractStatusService contractStatusService, IMapper mapper)
         {
             _employeeContractRepo = employeeContractRepo;
             _templateService = templateService;
+            _contractStatusService = contractStatusService;
             _mapper = mapper;
         }
         public bool Delete(int id)
@@ -64,14 +67,34 @@ namespace EmployeeMS.Service.Services.AppServices
         {
             if (contract.Id != null)
             {
+                // If the contract has an Id, update the existing contract
                 var existingContractDTO = _mapper.Map<EmployeeContract>(contract);
                 return _employeeContractRepo.Update(existingContractDTO);
-
             }
 
+            // Check if there is an existing contract that is not "terminated"
+            var existingActiveContract = _employeeContractRepo
+                .GetAll(c => c.EmployeeId == contract.EmployeeId &&
+                     c.ContractStatus.StatusName != Constants.ContractStatus.terminated &&
+                     c.ContractStatus.StatusName != Constants.ContractStatus.on_leave)
+                .Result
+                .FirstOrDefault();
+
+            // If there is an active contract, prevent creating a new one
+            if (existingActiveContract != null)
+            {
+                return false; // You can handle this more gracefully depending on your business logic (e.g., throw an exception or return a custom message)
+            }
+
+            // Get the status for "active"
+            var activeStatus = _contractStatusService.GetContractStatusByName(Constants.ContractStatus.active).Result;
+            contract.ContractStatusId = activeStatus.Id;
+
+            // Map the contract to DTO and add it
             var contractDTO = _mapper.Map<EmployeeContract>(contract);
             return _employeeContractRepo.Add(contractDTO);
         }
+
         public async Task<(byte[] pdfBytes, string sanitizedFileName)> GenerateEmployeeContractPdfReportWithTemplateAsync(int contractId)
         {
             var contract = await Get(contractId);

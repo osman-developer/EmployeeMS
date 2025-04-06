@@ -50,9 +50,9 @@ namespace EmployeeMS.Infrastructure.Repository
             return await _context.Set<T>().ToListAsync();
         }
 
-        public virtual Task<List<T>> GetAll(Expression<Func<T, bool>> predicate)
+        public async Task<List<T>> GetAll(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().Where(predicate).ToListAsync();
+            return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
         public bool Update(T entity)

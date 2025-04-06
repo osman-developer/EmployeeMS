@@ -17,7 +17,7 @@ namespace EmployeeMS.Domain.DTOs.EmployeeContract
         public int ContractTypeId { get; set; }
         public decimal Salary { get; set; }
         public string Position { get; set; }
-        public int ContractStatusId { get; set; }
+        public int? ContractStatusId { get; set; }
         public DateOnly SigningDate { get; set; }
         public string ContractTerms { get; set; }
 

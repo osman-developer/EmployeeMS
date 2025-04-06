@@ -6,6 +6,7 @@ import { ContractCardComponent } from './contract-card/contract-card.component';
 import { ListContractComponent } from './list-contract/list-contract.component';
 import { KanbanContractComponent } from './kanban-contract/kanban-contract.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AddContractComponent } from './add-contract/add-contract.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ContractDashboardComponent,
     ListContractComponent,
     KanbanContractComponent,
+    AddContractComponent,
   ],
   imports: [
     DragDropModule,
