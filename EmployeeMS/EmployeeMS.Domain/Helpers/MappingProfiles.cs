@@ -11,6 +11,7 @@ using EmployeeMS.Domain.DTOs.EmployeeFile;
 using System.Xml.Linq;
 using EmployeeMS.Domain.DTOs.Department;
 using EmployeeMS.Domain.DTOs.EmployeeContract;
+using EmployeeMS.Domain.DTOs.EmployeeContractType;
 namespace EmployeeMS.Domain.Helpers
 {
     public class MappingProfiles : Profile
@@ -45,6 +46,8 @@ namespace EmployeeMS.Domain.Helpers
               .ForMember(dest => dest.ContractType, opt => opt.MapFrom(src => src.ContractType.ContractTypeName));
 
             CreateMap<AddEmployeeContractDTO, EmployeeContract>();
+
+            CreateMap<EmployeeContractType, GetEmployeeContractType>();
         }
     }
 }

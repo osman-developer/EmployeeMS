@@ -27,6 +27,7 @@ builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ITemplateService, TemplateService>();
 builder.Services.AddScoped<IContractStatusService,ContractStatusService>();
 builder.Services.AddScoped<IEmployeeContractService, EmployeeContractService>();
+builder.Services.AddScoped<IEmployeeContractTypeService, EmployeeContractTypeService>();
 
 builder.Services.AddCors(options =>
 {

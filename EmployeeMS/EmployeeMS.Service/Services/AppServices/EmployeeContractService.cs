@@ -9,6 +9,7 @@ using EmployeeMS.Domain.Pagination;
 using iText.Html2pdf;
 using iText.Kernel.Pdf;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 
 
@@ -72,19 +73,8 @@ namespace EmployeeMS.Service.Services.AppServices
                 return _employeeContractRepo.Update(existingContractDTO);
             }
 
-            // Check if there is an existing contract that is not "terminated"
-            var existingActiveContract = _employeeContractRepo
-                .GetAll(c => c.EmployeeId == contract.EmployeeId &&
-                     c.ContractStatus.StatusName != Constants.ContractStatus.terminated &&
-                     c.ContractStatus.StatusName != Constants.ContractStatus.on_leave)
-                .Result
-                .FirstOrDefault();
-
-            // If there is an active contract, prevent creating a new one
-            if (existingActiveContract != null)
-            {
-                return false; // You can handle this more gracefully depending on your business logic (e.g., throw an exception or return a custom message)
-            }
+            this.CheckExistingContract(contract.EmployeeId);
+            
 
             // Get the status for "active"
             var activeStatus = _contractStatusService.GetContractStatusByName(Constants.ContractStatus.active).Result;
@@ -95,6 +85,23 @@ namespace EmployeeMS.Service.Services.AppServices
             return _employeeContractRepo.Add(contractDTO);
         }
 
+        private bool CheckExistingContract(int emploeeId)
+        {
+            // Check if there is an existing contract that is not "terminated"
+            var existingActiveContract = _employeeContractRepo
+                .GetAll(c => c.EmployeeId == emploeeId &&
+                     c.ContractStatus.StatusName != Constants.ContractStatus.terminated &&
+                     c.ContractStatus.StatusName != Constants.ContractStatus.on_leave)
+                .Result
+                .FirstOrDefault();
+
+            // If there is an active contract, prevent creating a new one
+            if (existingActiveContract != null)
+            {
+                return false; // You can handle this more gracefully depending on your business logic (e.g., throw an exception or return a custom message)
+            }
+            return true;
+        }
         public async Task<(byte[] pdfBytes, string sanitizedFileName)> GenerateEmployeeContractPdfReportWithTemplateAsync(int contractId)
         {
             var contract = await Get(contractId);
