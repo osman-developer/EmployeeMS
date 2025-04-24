@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AddContractDTO } from '../../../DTOs/contract/AddContractDTO';
 import { untilDestroyed } from '../../../_services/until-destroy.service';
 import { EmployeeService } from '../../../_services/employeeAPI.service';
 import { appConstants } from '../../../_constants/app-constants';
 import { PagingResponse } from '../../../models/pagination-models/paging-response.model';
+import { EmployeeContractTypeService } from '../../../_services/employeeContractTypeAPI.service';
+import { GetContractTypeDTO } from '../../../DTOs/contractType/GetContractTypeDTO';
 
 @Component({
   selector: 'app-add-contract',
@@ -11,7 +13,7 @@ import { PagingResponse } from '../../../models/pagination-models/paging-respons
   templateUrl: './add-contract.component.html',
   styleUrl: './add-contract.component.css',
 })
-export class AddContractComponent {
+export class AddContractComponent implements OnInit {
   contract = {} as AddContractDTO;
 
   @Output() contractAdded = new EventEmitter<AddContractDTO>();
@@ -19,6 +21,7 @@ export class AddContractComponent {
 
   private destroy$ = untilDestroyed();
   employees: any = [];
+  contractTypes: GetContractTypeDTO[] = [];
   isLoading: boolean = false; // Loading indicator for fetching data
   hasMore: boolean = true; // Whether there are more employees to load
   previousSelectedValue: any = null; // Track previous value to detect repeated selection of "Load More..."
@@ -29,7 +32,14 @@ export class AddContractComponent {
   pageIndex: number = 1;
   pageSize: number = appConstants.pageSize;
   searchString: string = '';
-  constructor(private _employeeService: EmployeeService) {}
+  constructor(
+    private _employeeService: EmployeeService,
+    private _employeeContractTypeService: EmployeeContractTypeService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadContractTypes();
+  }
 
   // Append new employees to the list, or replace the list for the first page
   processEmployeeResponse(response: PagingResponse): void {
@@ -74,6 +84,23 @@ export class AddContractComponent {
       });
   }
 
+  // Load contract types
+  loadContractTypes() {
+    // Make the API call to get employees
+    this._employeeContractTypeService
+      .get()
+      .pipe(this.destroy$())
+      .subscribe({
+        next: (response: GetContractTypeDTO[]) => {
+          this.contractTypes = response;
+          console.log('respo', response);
+        },
+        error: (err) => {
+          console.error('Error fetching contract types:', err);
+          this.isLoading = false;
+        },
+      });
+  }
   // Called when the dropdown is focused
   onDropdownFocus() {
     if (this.employees.length === 0) {
